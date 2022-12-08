@@ -32,7 +32,7 @@ public class AttackState : IZombieState
 
     public void OnTriggerStay(Collider col)
     {
-        if (col.CompareTag("Player"))
+        if(controller.ShouldAttack)
         {
             controller.Attack();
         }
@@ -40,9 +40,6 @@ public class AttackState : IZombieState
 
     public void OnTriggerExit(Collider col)
     {
-        if (col.CompareTag("Player"))
-        {
-            controller.ChangeToState(controller.WanderState);
-        }
+        controller.ChangeToState(controller.WanderState);
     }
 }

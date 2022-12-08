@@ -38,9 +38,6 @@ public class FollowState : IZombieState
 
     public void OnTriggerExit(Collider col)
     {
-        if (col.CompareTag("Player"))
-        {
-            controller.ChangeToState(controller.WanderState);
-        }
+        controller.ChangeToState(controller.WanderState);
     }
 }

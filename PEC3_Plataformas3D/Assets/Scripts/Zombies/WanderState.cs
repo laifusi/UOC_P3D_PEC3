@@ -33,18 +33,12 @@ public class WanderState : IZombieState
 
     public void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("Player"))
-        {
-            controller.ChangeToState(controller.FollowState);
-        }
+        controller.ChangeToState(controller.FollowState);
     }
 
     public void OnTriggerStay(Collider col)
     {
-        if (col.CompareTag("Player"))
-        {
-            controller.ChangeToState(controller.FollowState);
-        }
+        controller.ChangeToState(controller.FollowState);
     }
 
     public void OnTriggerExit(Collider col){ }

@@ -13,6 +13,7 @@ public class FollowState : IZombieState
 
     public void EnterState()
     {
+        controller.StartRun();
         controller.SetFollowDestination();
     }
 
@@ -32,11 +33,11 @@ public class FollowState : IZombieState
 
     public void GetHit() { }
 
-    public void OnTriggerEnter(Collider col) { }
+    public void OnTriggerEnter() { }
 
-    public void OnTriggerStay(Collider col) { }
+    public void OnTriggerStay() { }
 
-    public void OnTriggerExit(Collider col)
+    public void OnTriggerExit()
     {
         controller.ChangeToState(controller.WanderState);
     }

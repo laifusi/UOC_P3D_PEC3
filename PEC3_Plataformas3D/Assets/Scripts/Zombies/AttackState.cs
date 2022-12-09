@@ -16,29 +16,29 @@ public class AttackState : IZombieState
         controller.StopMovement();
     }
 
-    public void UpdateState()
-    {
-        if(!controller.ReachedDestination(false))
-        {
-            controller.ChangeToState(controller.FollowState);
-        }
-    }
+    public void UpdateState() { }
 
     public void ExitState() { }
 
     public void GetHit() { }
 
-    public void OnTriggerEnter(Collider col) { }
+    public void OnTriggerEnter() { }
 
-    public void OnTriggerStay(Collider col)
+    public void OnTriggerStay()
     {
-        if(controller.ShouldAttack)
+        controller.LookAtPlayer();
+
+        if (!controller.ReachedDestination(false))
+        {
+            controller.ChangeToState(controller.FollowState);
+        }
+        else if (controller.ShouldAttack)
         {
             controller.Attack();
         }
     }
 
-    public void OnTriggerExit(Collider col)
+    public void OnTriggerExit()
     {
         controller.ChangeToState(controller.WanderState);
     }

@@ -9,6 +9,8 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private float attackDistance;
     [SerializeField] private float timeBetweenFollowRecalculation = 1;
     [SerializeField] private float wanderRadius = 5;
+    [SerializeField] private float moveSpeed = 0.2f;
+    [SerializeField] private float runSpeed = 3f;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
@@ -16,7 +18,7 @@ public class ZombieAIController : MonoBehaviour
 
     private IZombieState currentState;  // IZombieState for the current state
     private NavMeshAgent navMeshAgent;  // NavMeshAgent component
-    private Transform player;
+    private Vector3 playerPos;
     private float timeSinceFollowUpdate;
     private Animator animator;
     private bool canAttack = true;
@@ -47,9 +49,23 @@ public class ZombieAIController : MonoBehaviour
         currentState?.EnterState();
     }
 
+    public void StartMove()
+    {
+        animator.SetBool("Running", false);
+        animator.SetBool("Walking", true);
+        navMeshAgent.isStopped = false;
+        navMeshAgent.speed = moveSpeed;
+    }
+
+    public void StartRun()
+    {
+        animator.SetBool("Running", true);
+        navMeshAgent.isStopped = false;
+        navMeshAgent.speed = runSpeed;
+    }
+
     public void RandomizeDestination()
     {
-        animator.SetBool("Walking", true);
         float randomX = transform.position.x + UnityEngine.Random.Range(-wanderRadius, wanderRadius);
         float randomZ = transform.position.z + UnityEngine.Random.Range(-wanderRadius, wanderRadius);
         Vector3 randomPosition = new Vector3(randomX, wanderRadius, randomZ);
@@ -69,14 +85,18 @@ public class ZombieAIController : MonoBehaviour
         }
         else
         {
-            return navMeshAgent.remainingDistance <= attackDistance;
+            return Vector3.Distance(playerPos, transform.position) <= attackDistance;
         }
     }
 
     public void SetFollowDestination()
     {
         timeSinceFollowUpdate = 0;
-        navMeshAgent.SetDestination(player.position);
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(playerPos, out hit, wanderRadius, NavMesh.AllAreas))
+        {
+            navMeshAgent.SetDestination(hit.position);
+        }
     }
 
     public bool ShouldRecalculateDestination()
@@ -86,16 +106,25 @@ public class ZombieAIController : MonoBehaviour
 
     public void StopMovement()
     {
+        animator.SetBool("Running", false);
         animator.SetBool("Walking", false);
+        navMeshAgent.SetDestination(transform.position);
         navMeshAgent.isStopped = true;
     }
+
+    public bool ShouldAttack => canAttack;
 
     public void EnableAttack(int canAttack)
     {
         this.canAttack = canAttack == 0 ? false : true;
     }
 
-    public bool ShouldAttack => canAttack;
+    public void LookAtPlayer()
+    {
+        Vector3 lookDirection = playerPos - transform.position;
+
+        transform.rotation = Quaternion.FromToRotation(Vector3.forward, new Vector3(lookDirection.x, 0, lookDirection.z));
+    }
 
     public void Attack()
     {
@@ -106,8 +135,8 @@ public class ZombieAIController : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            player = other.transform;
-            currentState.OnTriggerEnter(other);
+            playerPos = other.transform.position;
+            currentState.OnTriggerEnter();
         }
     }
 
@@ -115,7 +144,8 @@ public class ZombieAIController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            currentState.OnTriggerStay(other);
+            playerPos = other.transform.position;
+            currentState.OnTriggerStay();
         }
     }
 
@@ -123,8 +153,8 @@ public class ZombieAIController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player = null;
-            currentState.OnTriggerExit(other);
+            playerPos = Vector3.zero;
+            currentState.OnTriggerExit();
         }
     }
 }

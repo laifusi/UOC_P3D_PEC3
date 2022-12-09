@@ -2676,9 +2676,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdcb94764ce42364eb9bdd58f1b818b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 0.5
+  attackDistance: 1
   timeBetweenFollowRecalculation: 1
   wanderRadius: 15
+  moveSpeed: 0.2
+  runSpeed: 3
 --- !u!195 &305912470
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2689,7 +2691,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.05
+  m_Speed: 0.2
   m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2708,11 +2710,11 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305912466}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e52fb17f9b1e7fd48b8955f1391d3688, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.95
+  m_Radius: 5.45
   m_Center: {x: 0, y: 0.87, z: 0}
 --- !u!1001 &313773929
 PrefabInstance:
@@ -9475,6 +9477,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b347e7f5d5738854ea6cda52092be3b6, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 417b8ca1d1b71644abf58b8b6427fed7, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 417b8ca1d1b71644abf58b8b6427fed7, type: 3}
 --- !u!1001 &1212993417
@@ -12906,7 +12912,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
+  m_Radius: 0.21
   m_Height: 1.89
   m_Direction: 1
   m_Center: {x: 0, y: 0.92, z: 0}
@@ -13132,6 +13138,7 @@ GameObject:
   - component: {fileID: 1645428238}
   - component: {fileID: 1651662184}
   - component: {fileID: 1651768652}
+  - component: {fileID: 1658762767}
   m_Layer: 0
   m_Name: ThirdPersonController
   m_TagString: Player
@@ -13139,6 +13146,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!208 &1658762767
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658762766}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.21, y: 1, z: 0.21}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.97, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1686235511
 PrefabInstance:
   m_ObjectHideFlags: 0

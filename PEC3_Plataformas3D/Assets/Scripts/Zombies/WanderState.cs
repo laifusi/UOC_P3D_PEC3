@@ -13,6 +13,7 @@ public class WanderState : IZombieState
 
     public void EnterState()
     {
+        controller.StartMove();
         controller.RandomizeDestination();
     }
 
@@ -31,15 +32,15 @@ public class WanderState : IZombieState
         controller.ChangeToState(controller.FollowState);
     }
 
-    public void OnTriggerEnter(Collider col)
+    public void OnTriggerEnter()
     {
         controller.ChangeToState(controller.FollowState);
     }
 
-    public void OnTriggerStay(Collider col)
+    public void OnTriggerStay()
     {
         controller.ChangeToState(controller.FollowState);
     }
 
-    public void OnTriggerExit(Collider col){ }
+    public void OnTriggerExit(){ }
 }

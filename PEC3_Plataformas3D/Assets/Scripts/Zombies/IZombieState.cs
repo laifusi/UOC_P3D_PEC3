@@ -8,9 +8,9 @@ public interface IZombieState
     void UpdateState();
     void ExitState();
 
-    void OnTriggerEnter(Collider col);
-    void OnTriggerStay(Collider col);
-    void OnTriggerExit(Collider col);
+    void OnTriggerEnter();
+    void OnTriggerStay();
+    void OnTriggerExit();
 
     void GetHit();
 }

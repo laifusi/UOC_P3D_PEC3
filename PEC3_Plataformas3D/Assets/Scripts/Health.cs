@@ -7,7 +7,6 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class Health : MonoBehaviour
 {
     [SerializeField] float maxLife = 100;
-    [SerializeField] Collider deathCollider;
 
     private float life;
     private Animator animator;

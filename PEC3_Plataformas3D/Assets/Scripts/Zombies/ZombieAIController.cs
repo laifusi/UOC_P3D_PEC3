@@ -12,6 +12,7 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private float wanderRadius = 5;
     [SerializeField] private float moveSpeed = 0.2f;
     [SerializeField] private float runSpeed = 3f;
+    [SerializeField] private float maxHealth = 100;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
@@ -24,9 +25,12 @@ public class ZombieAIController : MonoBehaviour
     private Animator animator;
     private bool canAttack = true;
     private Health player;
+    private float health;
 
     private void Start()
     {
+        health = maxHealth;
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
@@ -147,7 +151,7 @@ public class ZombieAIController : MonoBehaviour
         {
             playerPos = other.transform.position;
             player = other.GetComponent<Health>();
-            currentState.OnTriggerEnter();
+            currentState?.OnTriggerEnter();
         }
     }
 
@@ -156,7 +160,7 @@ public class ZombieAIController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerPos = other.transform.position;
-            currentState.OnTriggerStay();
+            currentState?.OnTriggerStay();
         }
     }
 
@@ -166,7 +170,37 @@ public class ZombieAIController : MonoBehaviour
         {
             playerPos = Vector3.zero;
             player = null;
-            currentState.OnTriggerExit();
+            currentState?.OnTriggerExit();
+        }
+    }
+
+    public void GetHurt(float damage)
+    {
+        health -= damage;
+        animator.SetTrigger("GetHurt");
+        if(health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        StopMovement();
+        currentState = null;
+        animator.SetBool("Dead", true);
+        GetComponent<Collider>().enabled = false;
+        navMeshAgent.enabled = false;
+        StartCoroutine(FixDeathAnimation());
+        Destroy(gameObject, 10);
+    }
+    IEnumerator FixDeathAnimation()
+    {
+        yield return new WaitForSeconds(1f);
+        for (float i = 0; i >= -0.9f; i -= 0.01f)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.Translate(0, -0.01f, 0);
         }
     }
 }

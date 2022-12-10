@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class ZombieAIController : MonoBehaviour
 {
     [SerializeField] private float attackDistance;
+    [SerializeField] private float attackDamage = 20;
     [SerializeField] private float timeBetweenFollowRecalculation = 1;
     [SerializeField] private float wanderRadius = 5;
     [SerializeField] private float moveSpeed = 0.2f;
@@ -22,6 +23,7 @@ public class ZombieAIController : MonoBehaviour
     private float timeSinceFollowUpdate;
     private Animator animator;
     private bool canAttack = true;
+    private Health player;
 
     private void Start()
     {
@@ -131,11 +133,20 @@ public class ZombieAIController : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
+    public void HitPlayer()
+    {
+        if(Vector3.Distance(playerPos, transform.position) <= attackDistance)
+        {
+            player.GetHurt(attackDamage);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
             playerPos = other.transform.position;
+            player = other.GetComponent<Health>();
             currentState.OnTriggerEnter();
         }
     }
@@ -154,6 +165,7 @@ public class ZombieAIController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerPos = Vector3.zero;
+            player = null;
             currentState.OnTriggerExit();
         }
     }

@@ -37,6 +37,7 @@ public class Gun : MonoBehaviour
     {
         if(amountOfMunition > 0 && Input.GetMouseButtonDown(0))
         {
+            amountOfMunition--;
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
             Destroy(bullet, 2);
         }

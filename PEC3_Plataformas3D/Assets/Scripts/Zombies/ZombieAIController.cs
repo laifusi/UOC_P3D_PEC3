@@ -145,7 +145,7 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void TriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
@@ -155,7 +155,7 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    public void TriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -164,7 +164,7 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void TriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {

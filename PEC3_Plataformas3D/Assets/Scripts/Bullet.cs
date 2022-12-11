@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Rigidbody>().AddForce(transform.right * force);
+        GetComponent<Rigidbody>().AddForce(transform.up * force);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private int initialAmountOfBullets = 10;
+    [SerializeField] private int maxBullets = 10;
 
     private int amountOfMunition;
 
@@ -20,6 +21,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         //audioSource = GetComponent<AudioSource>();
+        Ammo.OnPickAmmo = AddAmmo;
 
         amountOfMunition = initialAmountOfBullets;
         //OnAmmoChange?.Invoke(typeOfGun, amountOfMunition);
@@ -33,7 +35,7 @@ public class Gun : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(amountOfMunition > 0 && Input.GetMouseButtonDown(0))
         {
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
             Destroy(bullet, 2);
@@ -45,16 +47,16 @@ public class Gun : MonoBehaviour
     /// </summary>
     /// <param name="typeOfAmmo">Type of munition to add</param>
     /// <param name="amount">Amount of bullets to add</param>
-    /*public void AddAmmo(MunitionType typeOfAmmo, int amount)
+    public void AddAmmo(/*MunitionType typeOfAmmo,*/ int amount)
     {
-        if (typeOfAmmo != typeOfGun)
-            return;
+        /*if (typeOfAmmo != typeOfGun)
+            return;*/
 
         amountOfMunition += amount;
-        if (amountOfMunition > maxNumberOfBullets)
-            amountOfMunition = maxNumberOfBullets;
-        OnAmmoChange?.Invoke(typeOfGun, amountOfMunition);
-    }*/
+        if (amountOfMunition > maxBullets)
+            amountOfMunition = maxBullets;
+        //OnAmmoChange?.Invoke(typeOfGun, amountOfMunition);
+    }
 
     /// <summary>
     /// Method to activate or deactivate the gun

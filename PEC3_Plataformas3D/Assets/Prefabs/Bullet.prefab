@@ -39,6 +39,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7062155894636072435}
     m_Modifications:
+    - target: {fileID: -3413812271017367698, guid: e43b9a471c8274a8fac6ae35c666fd0b, type: 3}
+      propertyPath: bloodParticles
+      value: 
+      objectReference: {fileID: 6823200998282874702, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
     - target: {fileID: 3111123709821073303, guid: e43b9a471c8274a8fac6ae35c666fd0b, type: 3}
       propertyPath: m_Name
       value: Ammo_00

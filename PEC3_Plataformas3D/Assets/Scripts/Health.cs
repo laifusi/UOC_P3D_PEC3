@@ -7,6 +7,8 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class Health : MonoBehaviour
 {
     [SerializeField] float maxLife = 100;
+    [SerializeField] private GameObject hitParticles;
+    [SerializeField] private Transform head;
 
     private float life;
     private Animator animator;
@@ -31,6 +33,8 @@ public class Health : MonoBehaviour
     public void GetHurt(float damage)
     {
         animator.SetTrigger("GetHit");
+
+        Instantiate(hitParticles, head.position, Quaternion.identity);
 
         life -= damage;
 

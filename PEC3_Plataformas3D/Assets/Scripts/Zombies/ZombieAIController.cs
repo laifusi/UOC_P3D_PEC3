@@ -13,6 +13,7 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private float moveSpeed = 0.2f;
     [SerializeField] private float runSpeed = 3f;
     [SerializeField] private float maxHealth = 100;
+    [SerializeField] private GameObject dieParticles;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
@@ -141,7 +142,7 @@ public class ZombieAIController : MonoBehaviour
     {
         if(Vector3.Distance(playerPos, transform.position) <= attackDistance)
         {
-            player.GetHurt(attackDamage);
+            player?.GetHurt(attackDamage);
         }
     }
 
@@ -189,6 +190,7 @@ public class ZombieAIController : MonoBehaviour
         StopMovement();
         currentState = null;
         animator.SetBool("Dead", true);
+        Instantiate(dieParticles, transform.position, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
         navMeshAgent.enabled = false;
         StartCoroutine(FixDeathAnimation());

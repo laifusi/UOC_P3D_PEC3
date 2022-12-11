@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float damage = 30;
     [SerializeField] private float force = 100;
+    [SerializeField] private GameObject bloodParticles;
 
     private void Start()
     {
@@ -18,6 +19,8 @@ public class Bullet : MonoBehaviour
         if(zombie != null)
         {
             zombie.GetHurt(damage);
+            Instantiate(bloodParticles, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 }

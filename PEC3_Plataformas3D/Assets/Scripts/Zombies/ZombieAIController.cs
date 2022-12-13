@@ -19,6 +19,8 @@ public class ZombieAIController : MonoBehaviour
     public FollowState FollowState { get; private set; }    // Follow state
     public AttackState AttackState { get; private set; }    // AttackState state
 
+    public Action<float> OnLifeChange;
+
     private IZombieState currentState;  // IZombieState for the current state
     private NavMeshAgent navMeshAgent;  // NavMeshAgent component
     private Vector3 playerPos;
@@ -178,6 +180,7 @@ public class ZombieAIController : MonoBehaviour
     public void GetHurt(float damage)
     {
         health -= damage;
+        OnLifeChange?.Invoke(health);
         animator.SetTrigger("GetHurt");
         if(health <= 0)
         {

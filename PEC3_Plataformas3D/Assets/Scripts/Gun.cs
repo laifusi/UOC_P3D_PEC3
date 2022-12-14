@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class Gun : MonoBehaviour
 
     private int amountOfMunition;
 
-    //public static Action<MunitionType, int> OnAmmoChange;
+    public static Action<int> OnAmmoChange;
 
     //public MunitionType MunitionType => typeOfGun;
 
@@ -24,7 +25,7 @@ public class Gun : MonoBehaviour
         Ammo.OnPickAmmo = AddAmmo;
 
         amountOfMunition = initialAmountOfBullets;
-        //OnAmmoChange?.Invoke(typeOfGun, amountOfMunition);
+        OnAmmoChange?.Invoke(amountOfMunition);
     }
 
     /// <summary>
@@ -38,6 +39,7 @@ public class Gun : MonoBehaviour
         if(amountOfMunition > 0 && Input.GetMouseButtonDown(0))
         {
             amountOfMunition--;
+            OnAmmoChange?.Invoke(amountOfMunition);
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
             Destroy(bullet, 2);
         }
@@ -56,7 +58,7 @@ public class Gun : MonoBehaviour
         amountOfMunition += amount;
         if (amountOfMunition > maxBullets)
             amountOfMunition = maxBullets;
-        //OnAmmoChange?.Invoke(typeOfGun, amountOfMunition);
+        OnAmmoChange?.Invoke(amountOfMunition);
     }
 
     /// <summary>

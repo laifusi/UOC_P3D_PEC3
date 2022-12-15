@@ -40,7 +40,7 @@ public class Gun : MonoBehaviour
         {
             amountOfMunition--;
             OnAmmoChange?.Invoke(amountOfMunition);
-            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
             Destroy(bullet, 2);
         }
     }

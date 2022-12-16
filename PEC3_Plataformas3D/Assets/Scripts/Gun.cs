@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private int initialAmountOfBullets = 10;
     [SerializeField] private int maxBullets = 10;
+    [SerializeField] private Camera cam;
+    [SerializeField] private Transform characterTransform;
 
     private int amountOfMunition;
 
@@ -36,10 +38,21 @@ public class Gun : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(amountOfMunition > 0 && Input.GetMouseButtonDown(0))
+        RaycastHit hit;
+        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 100))
+        {
+            Vector3 hitPoint = hit.point;
+            hitPoint.y = characterTransform.position.y;
+            Vector3 aimDirection = (hitPoint - characterTransform.position).normalized;
+            shootingPoint.right = (hit.point - shootingPoint.position).normalized;
+            characterTransform.forward = Vector3.Lerp(characterTransform.forward, aimDirection, Time.deltaTime * 20f);
+        }
+
+        if (amountOfMunition > 0 && Input.GetMouseButtonDown(0))
         {
             amountOfMunition--;
             OnAmmoChange?.Invoke(amountOfMunition);
+
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
             Destroy(bullet, 2);
         }

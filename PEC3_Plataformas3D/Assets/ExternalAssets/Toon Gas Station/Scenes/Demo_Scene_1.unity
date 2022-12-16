@@ -13412,13 +13412,14 @@ GameObject:
   - component: {fileID: 1471743205}
   - component: {fileID: 1471743207}
   - component: {fileID: 1471743206}
+  - component: {fileID: 1471743208}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1471743205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13477,6 +13478,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471743204}
   m_CullTransparentMesh: 1
+--- !u!114 &1471743208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471743204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8583cf9df2088b449b65be23f0c9acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingPoint: {fileID: 8434802289212760317}
+  cam: {fileID: 3426761833048710745}
 --- !u!1001 &1487698287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20544,7 +20559,7 @@ MonoBehaviour:
   m_TurnSpeed: 2
   m_RollSpeed: 0.2
   m_FollowVelocity: 1
-  m_FollowTilt: 0
+  m_FollowTilt: 1
   m_SpinTurnLimit: 20
   m_TargetVelocityLowerLimit: 4
   m_SmoothTurnTime: 0.2
@@ -22047,8 +22062,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4629155488945222388}
-  m_LocalRotation: {x: 0.015387693, y: 0.03817552, z: -0.7058875, w: -0.7071271}
-  m_LocalPosition: {x: -0.0209, y: 0.1854, z: 0.033}
+  m_LocalRotation: {x: 0.08275248, y: 0.13621022, z: -0.69398516, w: -0.7021279}
+  m_LocalPosition: {x: -0.025, y: 0.181, z: 0.038}
   m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -22058,7 +22073,7 @@ Transform:
   - {fileID: 4629155488945581788}
   m_Father: {fileID: 7835070606556954355}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 178.159, y: 175.656, z: -90.16998}
+  m_LocalEulerAnglesHint: {x: 175.822, y: 162.125, z: -91.32599}
 --- !u!4 &4629155488945581782
 Transform:
   m_ObjectHideFlags: 0
@@ -24517,7 +24532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8434802289212760317
 Transform:
   m_ObjectHideFlags: 0
@@ -24564,7 +24579,7 @@ GameObject:
   - component: {fileID: 8434802289342188226}
   - component: {fileID: 8434802289342229222}
   - component: {fileID: 8434802289331954085}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ThirdPersonController
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -24681,7 +24696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8434802289382822019}
   m_LocalRotation: {x: -0, y: -0.75386673, z: 0, w: 0.6570274}
-  m_LocalPosition: {x: 0.128, y: 1.419, z: 0.713}
+  m_LocalPosition: {x: -0.13, y: 1.351, z: 0.706}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24721,6 +24736,8 @@ MonoBehaviour:
   shootingPoint: {fileID: 8434802289382822016}
   initialAmountOfBullets: 100
   maxBullets: 100
+  cam: {fileID: 3426761833048710745}
+  characterTransform: {fileID: 8434802289332196384}
 --- !u!1 &8443962256078426050
 GameObject:
   m_ObjectHideFlags: 0

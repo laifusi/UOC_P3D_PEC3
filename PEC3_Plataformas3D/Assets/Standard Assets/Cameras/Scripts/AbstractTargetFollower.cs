@@ -16,6 +16,7 @@ namespace UnityStandardAssets.Cameras
         [SerializeField] protected Transform m_Target;            // The target object to follow
         [SerializeField] private bool m_AutoTargetPlayer = true;  // Whether the rig should automatically target the player.
         [SerializeField] private UpdateType m_UpdateType;         // stores the selected update type
+        [SerializeField] protected bool m_LockCursor;               // Boolean for cursor locking
 
         protected Rigidbody targetRigidbody;
 
@@ -30,6 +31,9 @@ namespace UnityStandardAssets.Cameras
             }
             if (m_Target == null) return;
             targetRigidbody = m_Target.GetComponent<Rigidbody>();
+
+            Cursor.lockState = m_LockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !m_LockCursor;
         }
 
 

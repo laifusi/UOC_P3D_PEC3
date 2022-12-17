@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject endGameCanvas;
-    [SerializeField] private UnityStandardAssets.Cameras.FreeLookCam cam;
+    [SerializeField] private UnityStandardAssets.Cameras.AutoCam cam;
 
     private void Start()
     {

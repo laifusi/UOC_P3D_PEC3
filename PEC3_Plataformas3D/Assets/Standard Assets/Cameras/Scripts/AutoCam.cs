@@ -23,6 +23,14 @@ namespace UnityStandardAssets.Cameras
         private float m_TurnSpeedVelocityChange; // The change in the turn speed velocity
         private Vector3 m_RollUp = Vector3.up;// The roll of the camera around the z axis ( generally this will always just be up )
 
+        private void Update()
+        {
+            if (m_LockCursor && Input.GetMouseButtonUp(0))
+            {
+                Cursor.lockState = m_LockCursor ? CursorLockMode.Confined : CursorLockMode.None;
+                Cursor.visible = !m_LockCursor;
+            }
+        }
 
         protected override void FollowTarget(float deltaTime)
         {
@@ -102,6 +110,19 @@ namespace UnityStandardAssets.Cameras
             // and aligning with the target object's up direction (i.e. its 'roll')
             m_RollUp = m_RollSpeed > 0 ? Vector3.Slerp(m_RollUp, targetUp, m_RollSpeed*deltaTime) : Vector3.up;
             transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, m_TurnSpeed*m_CurrentTurnAmount*deltaTime);
+        }
+
+        private void OnDisable()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        public void DisableMovement(bool locked)
+        {
+            m_TurnSpeed = 0;
+            Cursor.lockState = locked ? CursorLockMode.Confined : CursorLockMode.None;
+            Cursor.visible = !locked;
         }
     }
 }

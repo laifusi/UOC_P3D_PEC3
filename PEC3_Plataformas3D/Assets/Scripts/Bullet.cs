@@ -8,9 +8,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float force = 100;
     [SerializeField] private GameObject bloodParticles;
 
+    private Vector3 instantiationPoint;
+
     private void Start()
     {
         GetComponent<Rigidbody>().AddForce(transform.up * force);
+        instantiationPoint = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +21,7 @@ public class Bullet : MonoBehaviour
         ZombieAIController zombie = other.GetComponent<ZombieAIController>();
         if(zombie != null)
         {
-            zombie.GetHurt(damage);
+            zombie.GetHurt(damage, instantiationPoint);
             Instantiate(bloodParticles, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

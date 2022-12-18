@@ -53,6 +53,7 @@ public class ZombieAIController : MonoBehaviour
 
     public void ChangeToState(IZombieState state)
     {
+        Debug.Log("Enter " + state);
         currentState?.ExitState();
         currentState = state;
         currentState?.EnterState();
@@ -177,15 +178,20 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
-    public void GetHurt(float damage)
+    public void GetHurt(float damage, Vector3 attackedFrom)
     {
+        playerPos = attackedFrom;
+        
         health -= damage;
         OnLifeChange?.Invoke(health);
         animator.SetTrigger("GetHurt");
+
         if(health <= 0)
         {
             Die();
         }
+
+        currentState?.GetHit();
     }
 
     private void Die()

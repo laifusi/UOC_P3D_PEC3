@@ -1735,7 +1735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 1
-  attackDamage: 50
+  attackDamage: 20
   timeBetweenFollowRecalculation: 1
   wanderRadius: 15
   moveSpeed: 0.2

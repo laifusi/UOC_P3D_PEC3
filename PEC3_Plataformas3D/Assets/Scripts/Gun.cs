@@ -51,7 +51,7 @@ public class Gun : MonoBehaviour
                 hitPoint.y = characterTransform.position.y;
                 Vector3 aimDirection = (hitPoint - characterTransform.position).normalized;
                 shootingPoint.right = (hit.point - shootingPoint.position).normalized;
-                animationIKTarget.forward = (hit.point - shootingPoint.position).normalized;
+                animationIKTarget.forward = Vector3.Lerp(animationIKTarget.forward, (hit.point - shootingPoint.position).normalized, Time.deltaTime * 20f);
                 characterTransform.forward = Vector3.Lerp(characterTransform.forward, aimDirection, Time.deltaTime * 20f);
             }
 

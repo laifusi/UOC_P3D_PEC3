@@ -26,7 +26,7 @@ En cuanto al jugador, ya hemos comentado las clases de Health y KeyHolder. A est
 
 Finalmente, tenemos varios métodos para controlar los elementos de UI y mostrar la munición y la vida, tanto del jugador como de los zombies. Estas clases, HealthUI, EnemyHealthUI y AmmoUI, mediante el uso de eventos, se encargan de actualizar los datos. Además, en la pantalla seguimos al ratón con un sprite, dando feedback al jugador sobre hacia qué punto está apuntando.
 
-Además, se han añadido animaciones tanto para el personaje como para el zombie y se han usado sistemas de partículas en varios puntos del juego: cuando se hiere a un zombie, cuando se mata a un zombie, en las puertas mágicas de entrada de los zombies, al cerrar dichas puerta, en los tres tipos de items y de forma global en la escena en modo de tormenta de arena.
+Además, se han añadido animaciones tanto para el personaje como para el zombie y se han usado sistemas de partículas en varios puntos del juego: cuando se hiere a un zombie, cuando se mata a un zombie, en las puertas mágicas de entrada de los zombies, al cerrar dichas puerta, en los tres tipos de items y de forma global en la escena en modo de tormenta de arena. Los items, por su parte, se instancian en varios sitios a los que el jugador solo puede llegar con el uso del salto, como puede ser, encima de los coches.
 
 ## Problemas conocidos
 El control del jugador mediante el ThirdPersonController se podría mejorar y no permite al jugador moverse en el salto si este movimiento no se ha iniciado anteriormente, no he encontrado la forma de solucionarlo sin dejar de usar el asset estándar.

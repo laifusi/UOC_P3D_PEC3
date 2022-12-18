@@ -11,9 +11,17 @@ public class ZombieSpawner : Spawner
 
     private float timeSinceLastSpawn;
     private float timeBetweenSpawns;
+    private List<Transform> activeSpawnPoints = new List<Transform>();
 
     private void Start()
     {
+        ZombieDoor.OnDoorDestroyed += DoorDestroyed;
+
+        foreach(Transform point in spawnPoints)
+        {
+            activeSpawnPoints.Add(point);
+        }
+
         Spawn();
         timeBetweenSpawns = initialTimeBetweenSpawns;
     }
@@ -32,10 +40,20 @@ public class ZombieSpawner : Spawner
 
     protected override void Spawn()
     {
-        int randomId = Random.Range(0, spawnPoints.Length);
-        Instantiate(zombiePrefab, spawnPoints[randomId].position, Quaternion.identity);
+        int randomId = Random.Range(0, activeSpawnPoints.Count);
+        Instantiate(zombiePrefab, activeSpawnPoints[randomId].position, Quaternion.identity);
 
         timeSinceLastSpawn = 0;
         timeBetweenSpawns -= decreaseInEachSpawn;
+    }
+
+    private void DoorDestroyed(Transform pointDestroyed)
+    {
+        activeSpawnPoints.Remove(pointDestroyed);
+    }
+
+    private void OnDestroy()
+    {
+        ZombieDoor.OnDoorDestroyed -= DoorDestroyed;
     }
 }

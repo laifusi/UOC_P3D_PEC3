@@ -38,4 +38,4 @@ En el escenario, la unión de alguno de los colliders de los assets provoca que 
 Al iniciar el nivel es necesario disparar una vez para que se active correctamente la funcionalidad de apuntar.
 
 ## Vídeo
-Este es el [enlace]() al vídeo de la PEC.
+Este es el [enlace](https://youtu.be/9tUgbhGmeI4) al vídeo de la PEC.

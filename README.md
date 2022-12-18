@@ -1,92 +1,37 @@
 # PEC 3 - Plataformas 3D
 
+## Cómo jugar
+Al iniciar el juego y tras pulsar la opción "Play" en el menú, el jugador se encontrará en un pueblecito. En este, hay un plaga de zombies de los que deberá protegerse con su arma. En el escenario hay cinco puntos de entrada de zombies que el jugador deberá cerrar mediante cristales mágicos. Para conseguir estos cristales, tendrá que acabar con los zombies gigantes. Una vez tenga un cristal, si se acerca a una de las puertas de entrada, esta se cerrará. El juego se acaba cuando el jugador cierra las cinco puertas o cuando los zombies matan al jugador.
 
+Para controlar al personaje, se tendrán que utilizar las teclas WASD para el movimiento y el espacio para el salto. Por otro lado, haciendo clic izquierdo con el ratón, se disparará, mientras que moviendo el ratón por la pantalla se podrá apuntar.
 
-## Getting started
+Por el escenario, encontrará items de vida y de munición que le ayudarán a sobrevivir más tiempo.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Estructura e Implementación
+El juego se divide en dos escenas: el menú y el nivel.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Desde el menú, el jugador tiene las opciones de jugar o de salir del juego. Estas funcionalidades se realizan desde el MenuManager, que se encargará de cualquier cambio de escena que haya que hacer en el juego, del menú al nivel, del nivel al menú, o del nivel a reiniciar el nivel.
 
-## Add your files
+Por otro lado, el script GameManager se encargará de reaccionar al ganar o perder el juego, activando la UI correspondiente y desbloqueando el cursor.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Dentro del nivel, encontramos varios elementos a comentar: los enemigos, los items, los spawners y las funcionalidades del personaje.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/lfusterco/pec-3-plataformas-3d.git
-git branch -M main
-git push -uf origin main
-```
+Los zombies funcionan mediante una máquina de estados con tres estados distintos: WanderState, FollowState, AttackState. En el primer estado, se calcula, cada poco tiempo, un punto aleatorio relativamente cercano como próximo destino, con la intención de que el zombie merodee por el espacio. Si el jugador entra en su trigger de detección o el zombie es atacado, pasará al estado de seguimiento. En el estado de seguimiento, el zombie irá hacia el jugador hasta que esté suficientemente cerca para atacarlo. En el estado de ataque, herirá al jugador. Si el jugador se aleja, volverá a seguirlo. Si el jugador sale del trigger, el zombie volverá al estado de merodear. La interfaz IZombieState define los métodos de los estados, mientras que el controlador ZombieAIController engloba toda la funcionalidad de estos. Cuando un zombie muere, además, tiene una probabilidad de dejar caer un item. En el caso de los zombies normales, tienen un 40% de posibilidades de lanzar o items de vida o munición. Los zombies de tipo Boss, por su parte, siempre dejarán caer un item de tipo "Key", en forma de cristal mágico, que servirá para cerrar la puertas de entrada de los zombies. Esto, unido al tamaño, la cantidad de vida y la cantidad de daño que hacen, es lo que hace a los dos tipos de zombie diferentes.
 
-## Integrate with your tools
+En relación con esto, tenemos los items, que heredan de la clase Item. Esta clase padre, define el funcionamiento del collider y define el método PickUp, que cada clase hija deberá implementar. Tenemos tres tipos de item: las llaves, definidas en la clase Key; los items de vida, en la clase HealthPack; y los items de munición, en la clase Ammo. El primer tipo llamará al método PickUpKey de la clase KeyHolder, componente del player, que se encargará de guardar el número de llaves cogidas y no usadas. Este KeyHolder, también será llamado por la clase ZombieDoor: si el jugador entra al trigger de esa puerta mágica, se accederá al KeyHolder para comprobar si el jugador tiene una llave para cerrar la puerta, si es así, se eliminará una de ellas del KeyHolder y se destruirá la puerta. El segundo tipo de item llamará al método Heal de la clase Health, encargado de aumentar la vida del jugador. Esta clase además, será llamada por el ZombieAIController cuando el zombie ataque al jugador para quitarle vida. Si la vida llega a 0, el jugador morirá y, mediante una Action, avisará a las clases que estén escuchando del final de la partida. Esto nos sirve para desactivar el funcionamiento de varios elementos del juego y activar el canvas de pérdida de nivel. Por último, el item de munición, usará una Action para avisar a la arma, en la clase Gun, de que se ha cogido más munición y aumentar el número de balas que se tienen. De esta clase hablaremos más adelante.
 
-- [ ] [Set up project integrations](https://gitlab.com/lfusterco/pec-3-plataformas-3d/-/settings/integrations)
+Tanto los items como los zombies, se instancian en el juego de forma progresiva mediante Spawners. Para ello, hemos creado una clase padre Spawner que define el funcionamiento básico del Update y define los dos métodos que serán indispensables en cualquier spawner: ShouldSpawn y Spawn. Con el primero, comprobamos si hay que instanciar un nuevo objeto y con el segundo lo hacemos. Heredando de esta clase, tenemos dos clases: ZombieSpawner y ItemSpawner. En ambos casos guardaremos una lista de puntos de instanciación y los prefabs a instanciar. En el primero, instanciaremos los zombies en uno de los 5 puntos en función del tiempo desde la última instanciación, disminuyendo la cantidad de tiempo entre spawn y spawn en cada iteración. Este además, también instanciará los 5 bosses con una diferencia de tiempo mayor. El ItemSpawner, por su parte, solo instanciará un item si en el pueblo hay menos items de los definidos incialmente. Es decir, cada vez que el jugador coja un item, mediante una Action, recibirá un aviso que le dirá qué item se ha cogido y, en el siguiente Update, si el número total de items es menor que el valor definido, instanciará uno nuevo. Cada vez que un zombie deje caer un item, esto también se notificará al Spawner para que tenga en cuenta que se ha creado otro.
 
-## Collaborate with your team
+En cuanto al jugador, ya hemos comentado las clases de Health y KeyHolder. A estas, se añade el arma, que estará controlada por la clase Gun en el GameObject correspondiente, hijo del hueso correspondiente a la mano de nuestro personaje. Esta clase, además de controlar la munición que tenemos, se encarga de apuntar y disparar. Hemos usado el Animation Rigging de Unity para mover al personaje en función del punto al que se apunta. Para apuntar, creamos un rayo desde el punto en el que se encuentra el ratón hasta el collider contra el que choque. Sabiendo este punto orientamos el punto de control de la animación para que el cuerpo del jugador se gire en dirección al punto al que se disparará. Por otro lado, con el botón izquierdo del ratón se disparará el arma, instanciando un objeto bala, controlado por la clase Bullet. Esta se encargará de detectar el choque contra un enemigo y de herirlo, además de aplicarse una fuerza a sí mismo para salir disparado en la dirección correcta.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Finalmente, tenemos varios métodos para controlar los elementos de UI y mostrar la munición y la vida, tanto del jugador como de los zombies. Estas clases, HealthUI, EnemyHealthUI y AmmoUI, mediante el uso de eventos, se encargan de actualizar los datos. Además, en la pantalla seguimos al ratón con un sprite, dando feedback al jugador sobre hacia qué punto está apuntando.
 
-## Test and Deploy
+Además, se han añadido animaciones tanto para el personaje como para el zombie y se han usado sistemas de partículas en varios puntos del juego: cuando se hiere a un zombie, cuando se mata a un zombie, en las puertas mágicas de entrada de los zombies, al cerrar dichas puerta, en los tres tipos de items y de forma global en la escena en modo de tormenta de arena.
 
-Use the built-in continuous integration in GitLab.
+## Problemas conocidos
+El control del jugador mediante el ThirdPersonController se podría mejorar y no permite al jugador moverse en el salto si este movimiento no se ha iniciado anteriormente, no he encontrado la forma de solucionarlo sin dejar de usar el asset estándar.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+En el escenario, la unión de alguno de los colliders de los assets provoca que el jugador se impulse hacia arriba como si tropezara con ellos, a simple vista no parece que esto deba pasar pero no he encontrado el motivo.
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Vídeo
+Este es el [enlace]() al vídeo de la PEC.

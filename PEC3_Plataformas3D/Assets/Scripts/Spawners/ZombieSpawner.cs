@@ -17,6 +17,8 @@ public class ZombieSpawner : Spawner
     private int spawnedBosses;
     private List<Transform> activeSpawnPoints = new List<Transform>();
 
+    public static System.Action OnNoActivePoints;
+
     private void Start()
     {
         ZombieDoor.OnDoorDestroyed += DoorDestroyed;
@@ -45,7 +47,7 @@ public class ZombieSpawner : Spawner
 
     protected override bool ShouldSpawn()
     {
-        return timeSinceLastSpawn >= timeBetweenSpawns;
+        return activeSpawnPoints.Count > 0 && timeSinceLastSpawn >= timeBetweenSpawns;
     }
 
     protected override void Spawn()
@@ -72,6 +74,10 @@ public class ZombieSpawner : Spawner
     private void DoorDestroyed(Transform pointDestroyed)
     {
         activeSpawnPoints.Remove(pointDestroyed);
+        if(activeSpawnPoints.Count <= 0)
+        {
+            OnNoActivePoints?.Invoke();
+        }
     }
 
     private void OnDestroy()

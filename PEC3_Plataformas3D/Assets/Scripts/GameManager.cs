@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject winGameCanvas;
     [SerializeField] private GameObject endGameCanvas;
     [SerializeField] private UnityStandardAssets.Cameras.AutoCam cam;
 
@@ -13,6 +14,13 @@ public class GameManager : MonoBehaviour
         endGameCanvas.SetActive(false);
 
         Health.OnDeath += EndGame;
+        ZombieSpawner.OnNoActivePoints += WinGame;
+    }
+
+    private void WinGame()
+    {
+        cam.DisableMovement(false);
+        winGameCanvas.SetActive(true);
     }
 
     private void EndGame()
@@ -31,5 +39,6 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Health.OnDeath -= EndGame;
+        ZombieSpawner.OnNoActivePoints -= WinGame;
     }
 }

@@ -12,6 +12,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private Transform characterTransform;
     [SerializeField] private Transform animationIKTarget;
+    [SerializeField] private LayerMask aimingLayerMask;
 
     private int amountOfMunition;
     private bool activeGun = true;
@@ -26,6 +27,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         Health.OnDeath += DeactivateGun;
+        ZombieSpawner.OnNoActivePoints += DeactivateGun;
 
         //audioSource = GetComponent<AudioSource>();
         Ammo.OnPickAmmo = AddAmmo;
@@ -45,14 +47,15 @@ public class Gun : MonoBehaviour
         if(activeGun)
         {
             RaycastHit hit;
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 100))
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 100, aimingLayerMask))
             {
                 Vector3 hitPoint = hit.point;
-                hitPoint.y = characterTransform.position.y;
+                //hitPoint.y = characterTransform.position.y;
                 Vector3 aimDirection = (hitPoint - characterTransform.position).normalized;
                 shootingPoint.right = (hit.point - shootingPoint.position).normalized;
+                animationIKTarget.position = hit.point;
                 animationIKTarget.forward = Vector3.Lerp(animationIKTarget.forward, (hit.point - shootingPoint.position).normalized, Time.deltaTime * 20f);
-                characterTransform.forward = Vector3.Lerp(characterTransform.forward, aimDirection, Time.deltaTime * 20f);
+                //characterTransform.forward = Vector3.Lerp(characterTransform.forward, aimDirection, Time.deltaTime * 20f);
             }
 
             if (amountOfMunition > 0 && Input.GetMouseButtonDown(0))
@@ -99,5 +102,6 @@ public class Gun : MonoBehaviour
     private void OnDestroy()
     {
         Health.OnDeath -= DeactivateGun;
+        ZombieSpawner.OnNoActivePoints -= DeactivateGun;
     }
 }

@@ -58,7 +58,6 @@ public class ZombieAIController : MonoBehaviour
 
     public void ChangeToState(IZombieState state)
     {
-        Debug.Log("Enter " + state);
         currentState?.ExitState();
         currentState = state;
         currentState?.EnterState();

@@ -21,6 +21,8 @@ public class ItemSpawner : Spawner
     private void Start()
     {
         Item.OnItemPickedUp += NewEmptyPoint;
+        ZombieAIController.OnItemDropped += NewItemDropped;
+
         foreach(Transform point in spawnPoints)
         {
             emptySpawnPoints.Add(point);
@@ -37,6 +39,18 @@ public class ItemSpawner : Spawner
         usedSpawnPoints.Remove(emptiedSpawnPoint);
         currentNumberOfHealthPacks -= healthPack ? 1 : 0;
         currentNumberOfAmmoBoxes -= ammo ? 1 : 0;
+    }
+
+    private void NewItemDropped(bool isHealthPack, bool isAmmo, bool isKey)
+    {
+        if(isHealthPack)
+        {
+            currentNumberOfHealthPacks++;
+        }
+        else if(isAmmo)
+        {
+            currentNumberOfAmmoBoxes++;
+        }
     }
 
     protected override bool ShouldSpawn()
@@ -70,5 +84,6 @@ public class ItemSpawner : Spawner
     private void OnDestroy()
     {
         Item.OnItemPickedUp -= NewEmptyPoint;
+        ZombieAIController.OnItemDropped -= NewItemDropped;
     }
 }

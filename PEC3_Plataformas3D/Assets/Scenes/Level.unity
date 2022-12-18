@@ -8536,6 +8536,8 @@ MonoBehaviour:
   - {fileID: 2111300607}
   initialTimeBetweenSpawns: 20
   decreaseInEachSpawn: 0.05
+  bossPrefab: {fileID: 7195434353479341706, guid: ec758e6cd228c2646a6fb356e066e798, type: 3}
+  bossSpawnTime: 40
 --- !u!4 &878126578
 Transform:
   m_ObjectHideFlags: 0

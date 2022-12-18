@@ -14,12 +14,17 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private float runSpeed = 3f;
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private GameObject dieParticles;
+    [SerializeField] private float deathFixMultiplier = 1;
+    [SerializeField] private Rigidbody[] deathDropPrefabs;
+    [SerializeField] private float possibilityOfDrop = 40;
+    [SerializeField] private Vector3 dropForce;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
     public AttackState AttackState { get; private set; }    // AttackState state
 
     public Action<float> OnLifeChange;
+    public static Action<bool, bool, bool> OnItemDropped;
 
     private IZombieState currentState;  // IZombieState for the current state
     private NavMeshAgent navMeshAgent;  // NavMeshAgent component
@@ -203,15 +208,31 @@ public class ZombieAIController : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         navMeshAgent.enabled = false;
         StartCoroutine(FixDeathAnimation());
+        DropItem();
         Destroy(gameObject, 10);
     }
+
+    private void DropItem()
+    {
+        if (UnityEngine.Random.Range(0, 100) < possibilityOfDrop)
+        {
+            int randomId = UnityEngine.Random.Range(0, deathDropPrefabs.Length);
+            Rigidbody drop = Instantiate(deathDropPrefabs[randomId], transform.position, Quaternion.identity);
+            drop.AddForce(dropForce);
+            bool isHealthPack = drop.GetComponent<HealthPack>() != null;
+            bool isAmmo = drop.GetComponent<Ammo>() != null;
+            bool isKey = drop.GetComponent<Key>() != null;
+            OnItemDropped?.Invoke(isHealthPack, isAmmo, isKey);
+        }
+    }
+
     IEnumerator FixDeathAnimation()
     {
         yield return new WaitForSeconds(1f);
         for (float i = 0; i >= -0.9f; i -= 0.01f)
         {
             yield return new WaitForSeconds(0.01f);
-            transform.Translate(0, -0.01f, 0);
+            transform.Translate(0, -0.01f*deathFixMultiplier, 0);
         }
     }
 }

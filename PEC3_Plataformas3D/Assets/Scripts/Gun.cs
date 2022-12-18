@@ -19,8 +19,6 @@ public class Gun : MonoBehaviour
 
     public static Action<int> OnAmmoChange;
 
-    //public MunitionType MunitionType => typeOfGun;
-
     /// <summary>
     /// Start Method to initialize variables and listen for events
     /// </summary>
@@ -72,13 +70,9 @@ public class Gun : MonoBehaviour
     /// <summary>
     /// Method to add ammo to out count
     /// </summary>
-    /// <param name="typeOfAmmo">Type of munition to add</param>
     /// <param name="amount">Amount of bullets to add</param>
-    public void AddAmmo(/*MunitionType typeOfAmmo,*/ int amount)
+    public void AddAmmo(int amount)
     {
-        /*if (typeOfAmmo != typeOfGun)
-            return;*/
-
         amountOfMunition += amount;
         if (amountOfMunition > maxBullets)
             amountOfMunition = maxBullets;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealthUI : MonoBehaviour
 {
     [SerializeField] ZombieAIController controller;
+    [SerializeField] float maxLife = 100;
 
     private RectTransform rectTransform;
     private float maxWidth;
@@ -19,7 +20,7 @@ public class EnemyHealthUI : MonoBehaviour
 
     private void UpdateIndicator(float life)
     {
-        rectTransform.sizeDelta = new Vector2(life * maxWidth / 100, rectTransform.sizeDelta.y);
+        rectTransform.sizeDelta = new Vector2(life * maxWidth / maxLife, rectTransform.sizeDelta.y);
     }
 
     private void OnDestroy()

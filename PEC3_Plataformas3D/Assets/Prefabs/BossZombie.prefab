@@ -2132,6 +2132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 8005773660695691976}
+  maxLife: 200
 --- !u!1 &8005773660200050223
 GameObject:
   m_ObjectHideFlags: 0

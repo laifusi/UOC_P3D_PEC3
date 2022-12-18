@@ -67,6 +67,7 @@ public class ZombieSpawner : Spawner
     private void SpawnBoss()
     {
         spawnedBosses++;
+        timeSinceLastBossSpawn = 0;
         int randomId = Random.Range(0, activeSpawnPoints.Count);
         Instantiate(bossPrefab, activeSpawnPoints[randomId].position, Quaternion.identity);
     }

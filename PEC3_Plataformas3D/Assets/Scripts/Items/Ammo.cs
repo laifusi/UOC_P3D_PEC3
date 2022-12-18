@@ -11,6 +11,7 @@ public class Ammo : Item
 
     protected override void PickUp(GameObject character)
     {
+        OnItemPickedUp?.Invoke(false, true, transform.parent);
         OnPickAmmo?.Invoke(amountOfBullets);
     }
 }

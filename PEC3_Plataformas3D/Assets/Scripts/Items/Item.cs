@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public abstract class Item : MonoBehaviour
 {
     private AudioSource audioSource;
     private Collider myCollider;
+
+    public static Action<bool, bool, Transform> OnItemPickedUp;
 
     protected void Start()
     {

@@ -5,6 +5,8 @@ Al iniciar el juego y tras pulsar la opción "Play" en el menú, el jugador se e
 
 Para controlar al personaje, se tendrán que utilizar las teclas WASD para el movimiento y el espacio para el salto. Por otro lado, haciendo clic izquierdo con el ratón, se disparará, mientras que moviendo el ratón por la pantalla se podrá apuntar.
 
+Al iniciar el nivel es necesario disparar una vez para que se active correctamente la funcionalidad de apuntar.
+
 Por el escenario, encontrará items de vida y de munición que le ayudarán a sobrevivir más tiempo.
 
 ## Estructura e Implementación
@@ -32,6 +34,8 @@ Además, se han añadido animaciones tanto para el personaje como para el zombie
 El control del jugador mediante el ThirdPersonController se podría mejorar y no permite al jugador moverse en el salto si este movimiento no se ha iniciado anteriormente, no he encontrado la forma de solucionarlo sin dejar de usar el asset estándar.
 
 En el escenario, la unión de alguno de los colliders de los assets provoca que el jugador se impulse hacia arriba como si tropezara con ellos, a simple vista no parece que esto deba pasar pero no he encontrado el motivo.
+
+Al iniciar el nivel es necesario disparar una vez para que se active correctamente la funcionalidad de apuntar.
 
 ## Vídeo
 Este es el [enlace]() al vídeo de la PEC.

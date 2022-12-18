@@ -1,6 +1,8 @@
 # PEC 3 - Plataformas 3D
 
 ## Cómo jugar
+Para iniciar el juego será necesario acceder a la escena Menu en la carpeta Scenes del proyecto.
+
 Al iniciar el juego y tras pulsar la opción "Play" en el menú, el jugador se encontrará en un pueblecito. En este, hay un plaga de zombies de los que deberá protegerse con su arma. En el escenario hay cinco puntos de entrada de zombies que el jugador deberá cerrar mediante cristales mágicos. Para conseguir estos cristales, tendrá que acabar con los zombies gigantes. Una vez tenga un cristal, si se acerca a una de las puertas de entrada, esta se cerrará. El juego se acaba cuando el jugador cierra las cinco puertas o cuando los zombies matan al jugador.
 
 Para controlar al personaje, se tendrán que utilizar las teclas WASD para el movimiento y el espacio para el salto. Por otro lado, haciendo clic izquierdo con el ratón, se disparará, mientras que moviendo el ratón por la pantalla se podrá apuntar.

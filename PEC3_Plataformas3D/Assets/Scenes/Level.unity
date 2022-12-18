@@ -12278,6 +12278,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 149.1
       objectReference: {fileID: 0}
+    - target: {fileID: 8994018718641793249, guid: b967cd0acd188d4498efecab690544bc, type: 3}
+      propertyPath: m_text
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 8994018719474131817, guid: b967cd0acd188d4498efecab690544bc, type: 3}
       propertyPath: winGameCanvas
       value: 
@@ -16539,6 +16543,10 @@ PrefabInstance:
       propertyPath: shootingPoint
       value: 
       objectReference: {fileID: 569806601}
+    - target: {fileID: 8729160238966192693, guid: a812378d29df527479319fc0e2c99031, type: 3}
+      propertyPath: initialAmountOfBullets
+      value: 51
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a812378d29df527479319fc0e2c99031, type: 3}
 --- !u!1001 &1683961011

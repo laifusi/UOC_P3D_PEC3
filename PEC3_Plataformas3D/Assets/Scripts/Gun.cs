@@ -28,7 +28,7 @@ public class Gun : MonoBehaviour
         ZombieSpawner.OnNoActivePoints += DeactivateGun;
 
         //audioSource = GetComponent<AudioSource>();
-        Ammo.OnPickAmmo = AddAmmo;
+        Ammo.OnPickAmmo += AddAmmo;
 
         amountOfMunition = initialAmountOfBullets;
         OnAmmoChange?.Invoke(amountOfMunition);

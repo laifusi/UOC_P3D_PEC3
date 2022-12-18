@@ -47,6 +47,9 @@ public class ZombieAIController : MonoBehaviour
         AttackState = new AttackState(this);
 
         ChangeToState(WanderState);
+
+        Health.OnDeath += DeactivateAI;
+        ZombieSpawner.OnNoActivePoints += DeactivateAI;
     }
 
     private void Update()
@@ -233,5 +236,16 @@ public class ZombieAIController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             transform.Translate(0, -0.01f*deathFixMultiplier, 0);
         }
+    }
+
+    private void DeactivateAI()
+    {
+        currentState = null;
+    }
+
+    private void OnDestroy()
+    {
+        Health.OnDeath += DeactivateAI;
+        ZombieSpawner.OnNoActivePoints += DeactivateAI;
     }
 }

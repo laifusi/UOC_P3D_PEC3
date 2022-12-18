@@ -45,11 +45,18 @@ public class ZombieSpawner : Spawner
         timeSinceLastBossSpawn += Time.deltaTime;
     }
 
+    /// <summary>
+    /// If there's still open spawn points and the time since last spawn is bigger than the established time between spawns, we should spawn
+    /// </summary>
+    /// <returns></returns>
     protected override bool ShouldSpawn()
     {
         return activeSpawnPoints.Count > 0 && timeSinceLastSpawn >= timeBetweenSpawns;
     }
 
+    /// <summary>
+    /// We spawn a zombie in a random spawn point
+    /// </summary>
     protected override void Spawn()
     {
         int randomId = Random.Range(0, activeSpawnPoints.Count);
@@ -59,11 +66,18 @@ public class ZombieSpawner : Spawner
         timeBetweenSpawns -= decreaseInEachSpawn;
     }
 
+    /// <summary>
+    /// If not all bosses were spawned and the time since the last boss spawn is bigger than the established time between boss spawns, we should spawn a boss
+    /// </summary>
+    /// <returns></returns>
     private bool ShouldSpawnBoss()
     {
         return spawnedBosses < spawnPoints.Length && timeSinceLastBossSpawn >= bossSpawnTime;
     }
 
+    /// <summary>
+    /// Instantiate a boss in a random spawn point
+    /// </summary>
     private void SpawnBoss()
     {
         spawnedBosses++;
@@ -72,6 +86,10 @@ public class ZombieSpawner : Spawner
         Instantiate(bossPrefab, activeSpawnPoints[randomId].position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// We update the active spawn points when a door is destroyed
+    /// </summary>
+    /// <param name="pointDestroyed">Transfomr of the destroyed door</param>
     private void DoorDestroyed(Transform pointDestroyed)
     {
         activeSpawnPoints.Remove(pointDestroyed);

@@ -81,6 +81,9 @@ public class ZombieAIController : MonoBehaviour
         navMeshAgent.speed = runSpeed;
     }
 
+    /// <summary>
+    /// We set a new random Wander destination inside the wander radius
+    /// </summary>
     public void RandomizeDestination()
     {
         float randomX = transform.position.x + UnityEngine.Random.Range(-wanderRadius, wanderRadius);
@@ -94,6 +97,10 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// We check if we reached the nav mesh destination
+    /// If it's not the wander state we check if the player is in attack distance
+    /// </summary>
     public bool ReachedDestination(bool isWander)
     {
         if (isWander)
@@ -106,6 +113,9 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// We get the player's position translated to a nav mesh point
+    /// </summary>
     public void SetFollowDestination()
     {
         timeSinceFollowUpdate = 0;
@@ -116,6 +126,9 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// We check if we should recalculate the player's position in the follow state
+    /// </summary>
     public bool ShouldRecalculateDestination()
     {
         return timeSinceFollowUpdate >= timeBetweenFollowRecalculation;
@@ -131,11 +144,17 @@ public class ZombieAIController : MonoBehaviour
 
     public bool ShouldAttack => canAttack;
 
+    /// <summary>
+    /// Method used as an event of the attack animation to control attack timing
+    /// </summary>
     public void EnableAttack(int canAttack)
     {
         this.canAttack = canAttack == 0 ? false : true;
     }
 
+    /// <summary>
+    /// Method to rotate the enemy to look at the player
+    /// </summary>
     public void LookAtPlayer()
     {
         Vector3 lookDirection = playerPos - transform.position;
@@ -148,6 +167,9 @@ public class ZombieAIController : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
+    /// <summary>
+    /// Method used as an event of the animation to apply damage to the player if he is within distance
+    /// </summary>
     public void HitPlayer()
     {
         if(Vector3.Distance(playerPos, transform.position) <= attackDistance)
@@ -185,6 +207,11 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method to get damaged and cache the player's attacking position
+    /// </summary>
+    /// <param name="damage">Amount of damage received</param>
+    /// <param name="attackedFrom">Position the player attacked from</param>
     public void GetHurt(float damage, Vector3 attackedFrom)
     {
         playerPos = attackedFrom;
@@ -201,6 +228,9 @@ public class ZombieAIController : MonoBehaviour
         currentState?.GetHit();
     }
 
+    /// <summary>
+    /// Die method: deactivate functionalities, instantiate particle systems and animations and drop an item, if it applies
+    /// </summary>
     private void Die()
     {
         StopMovement();
@@ -214,6 +244,9 @@ public class ZombieAIController : MonoBehaviour
         Destroy(gameObject, 10);
     }
 
+    /// <summary>
+    /// Drop an item on death
+    /// </summary>
     private void DropItem()
     {
         if (UnityEngine.Random.Range(0, 100) < possibilityOfDrop)
@@ -228,6 +261,10 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine to fix the animation's positioning
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FixDeathAnimation()
     {
         yield return new WaitForSeconds(1f);
@@ -238,6 +275,9 @@ public class ZombieAIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method to deactive AI on game ended
+    /// </summary>
     private void DeactivateAI()
     {
         currentState = null;

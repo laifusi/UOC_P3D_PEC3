@@ -21,7 +21,7 @@ public class HealthUI : MonoBehaviour
     /// <summary>
     /// Update the health indicator: change the sizeDelta of the rectTransform according to the current value and the maxWidth
     /// </summary>
-    /// <param name="currentNumber"></param>
+    /// <param name="currentNumber">current life value</param>
     private void UpdateIndicator(float currentNumber)
     {
         rectTransform.sizeDelta = new Vector2(currentNumber * maxWidth / 100, rectTransform.sizeDelta.y);

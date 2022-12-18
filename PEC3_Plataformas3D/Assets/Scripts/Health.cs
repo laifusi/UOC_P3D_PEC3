@@ -59,7 +59,7 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Die method: We fire the death event
+    /// Die method: We fire the death event and animation
     /// </summary>
     private void Die()
     {
@@ -68,6 +68,9 @@ public class Health : MonoBehaviour
         OnDeath?.Invoke();
     }
 
+    /// <summary>
+    /// We fix the animation's positioning
+    /// </summary>
     IEnumerator FixDeathAnimation()
     {
         GetComponent<Collider>().enabled = false;

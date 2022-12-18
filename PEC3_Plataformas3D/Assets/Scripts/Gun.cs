@@ -26,8 +26,6 @@ public class Gun : MonoBehaviour
     {
         Health.OnDeath += DeactivateGun;
         ZombieSpawner.OnNoActivePoints += DeactivateGun;
-
-        //audioSource = GetComponent<AudioSource>();
         Ammo.OnPickAmmo += AddAmmo;
 
         amountOfMunition = initialAmountOfBullets;
@@ -36,9 +34,8 @@ public class Gun : MonoBehaviour
 
     /// <summary>
     /// Update method
-    /// We send a ray out from the center, if it hits something, we paint the aimingIndicator and check if the ammo amount, the time is right and the player pressed the button.
-    /// If the player can and does shoot, we check if it hit an enemy and hurt him.
-    /// If it didn't hit an enemy, we instantiate a bullet hole where we shot.
+    /// We send a raycast from the mouse position and orient the IK target to make the body look at the point we are aiming at
+    /// If the player clicks the mouse button, we instantiate a bullet
     /// </summary>
     private void Update()
     {
@@ -48,12 +45,9 @@ public class Gun : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 100, aimingLayerMask))
             {
                 Vector3 hitPoint = hit.point;
-                //hitPoint.y = characterTransform.position.y;
-                Vector3 aimDirection = (hitPoint - characterTransform.position).normalized;
                 shootingPoint.right = (hit.point - shootingPoint.position).normalized;
                 animationIKTarget.position = hit.point;
                 animationIKTarget.forward = Vector3.Lerp(animationIKTarget.forward, (hit.point - shootingPoint.position).normalized, Time.deltaTime * 20f);
-                //characterTransform.forward = Vector3.Lerp(characterTransform.forward, aimDirection, Time.deltaTime * 20f);
             }
 
             if (amountOfMunition > 0 && Input.GetMouseButtonDown(0))
@@ -88,11 +82,17 @@ public class Gun : MonoBehaviour
         activeGun = isActive;
     }
 
+    /// <summary>
+    /// Method to deactivate the gun on game end
+    /// </summary>
     private void DeactivateGun()
     {
         ActivateGun(false);
     }
 
+    /// <summary>
+    /// OnDestroy method to stop listening to events
+    /// </summary>
     private void OnDestroy()
     {
         Health.OnDeath -= DeactivateGun;

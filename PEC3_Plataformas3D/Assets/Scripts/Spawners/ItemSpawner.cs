@@ -34,6 +34,12 @@ public class ItemSpawner : Spawner
         }
     }
 
+    /// <summary>
+    /// Method to update the counters when an item is picked up
+    /// </summary>
+    /// <param name="healthPack">Boolean that indicates if the item was a health pack</param>
+    /// <param name="ammo">Boolean that indicates if the item was an ammo box</param>
+    /// <param name="emptiedSpawnPoint">Transform of the spawn point that got emptied</param>
     private void NewEmptyPoint(bool healthPack, bool ammo, Transform emptiedSpawnPoint)
     {
         usedSpawnPoints.Remove(emptiedSpawnPoint);
@@ -41,6 +47,12 @@ public class ItemSpawner : Spawner
         currentNumberOfAmmoBoxes -= ammo ? 1 : 0;
     }
 
+    /// <summary>
+    /// Method to update the counters when an item is spawned outside of the ItemSpawner (by a zombie death drop)
+    /// </summary>
+    /// <param name="isHealthPack">Boolean that indicates if the item was a health pack</param>
+    /// <param name="isAmmo">Boolean that indicates if the item was an ammo box</param>
+    /// <param name="isKey">Boolean that indicates if the item was a key</param>
     private void NewItemDropped(bool isHealthPack, bool isAmmo, bool isKey)
     {
         if(isHealthPack)
@@ -53,11 +65,17 @@ public class ItemSpawner : Spawner
         }
     }
 
+    /// <summary>
+    /// If the current number of items is lower than the minimum, we should spawn
+    /// </summary>
     protected override bool ShouldSpawn()
     {
-        return currentNumberOfItems < numberOfItems*2;
+        return emptySpawnPoints.Count > 0 && currentNumberOfItems < numberOfItems*2;
     }
 
+    /// <summary>
+    /// We check which type of item was picked up and spawn it
+    /// </summary>
     protected override void Spawn()
     {
         if(currentNumberOfHealthPacks < numberOfItems)
@@ -72,6 +90,10 @@ public class ItemSpawner : Spawner
         }
     }
 
+    /// <summary>
+    /// We instantiate the chosen prefab in a random point that is empty
+    /// </summary>
+    /// <param name="prefab">Item that should be spawned</param>
     private void SpawnItem(GameObject prefab)
     {
         int randomId = Random.Range(0, emptySpawnPoints.Count);

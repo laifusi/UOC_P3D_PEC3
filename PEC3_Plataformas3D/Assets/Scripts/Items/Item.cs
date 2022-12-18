@@ -17,9 +17,8 @@ public abstract class Item : MonoBehaviour
     }
 
     /// <summary>
-    /// If the player picks an item: play the sound, do the actions defined in the child classes and destroy the object
+    /// If the player picks an item: do the actions defined in the child classes and destroy the object
     /// </summary>
-    /// <param name="other"></param>
     protected void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))

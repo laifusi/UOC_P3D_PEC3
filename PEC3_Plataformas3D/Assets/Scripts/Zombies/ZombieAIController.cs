@@ -26,7 +26,7 @@ public class ZombieAIController : MonoBehaviour
     public Action<float> OnLifeChange;
     public static Action<bool, bool, bool> OnItemDropped;
 
-    private IZombieState currentState;  // IZombieState for the current state
+    private IAIState currentState;  // IZombieState for the current state
     private NavMeshAgent navMeshAgent;  // NavMeshAgent component
     private Vector3 playerPos;
     private float timeSinceFollowUpdate;
@@ -59,7 +59,7 @@ public class ZombieAIController : MonoBehaviour
         currentState?.UpdateState();
     }
 
-    public void ChangeToState(IZombieState state)
+    public void ChangeToState(IAIState state)
     {
         currentState?.ExitState();
         currentState = state;

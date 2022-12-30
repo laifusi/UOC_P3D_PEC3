@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : IZombieState
+public class AttackState : IAIState
 {
     private ZombieAIController controller;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WanderState : IZombieState
+public class WanderState : IAIState
 {
     private ZombieAIController controller;
 

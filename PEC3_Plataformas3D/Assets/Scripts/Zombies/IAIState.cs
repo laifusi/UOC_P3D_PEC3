@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IZombieState
+public interface IAIState
 {
     void EnterState();
     void UpdateState();

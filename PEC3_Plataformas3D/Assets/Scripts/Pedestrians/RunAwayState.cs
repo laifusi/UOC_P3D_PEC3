@@ -16,28 +16,28 @@ public class RunAwayState : IAIState
         controller.RunToSafePoint();
     }
 
-    public void UpdateState() { }
+    public void UpdateState()
+    {
+        if (controller.ReachedDestination())
+        {
+            controller.Disappear();
+        }
+    }
 
     public void ExitState() { }
 
     public void GetHit() { }
 
-    public void OnTriggerEnter() { }
+    public void OnTriggerEnter()
+    {
+        controller.RunToSafePoint();
+    }
 
     public void OnTriggerStay()
     {
-        if(controller.ReachedDestination())
-        {
-            controller.Disappear();
-        }
-        else if (controller.ShouldRecalculateSafePoint())
-        {
-            controller.RunToSafePoint();
-        }
     }
 
     public void OnTriggerExit()
     {
-        controller.ChangeToState(controller.WalkState);
     }
 }

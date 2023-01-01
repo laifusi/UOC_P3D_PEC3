@@ -13,14 +13,21 @@ public class WalkState : IAIState
 
     public void EnterState()
     {
-        controller.SetDestination();
+        controller.ChooseNextAction();
     }
 
     public void UpdateState()
     {
         if(controller.ReachedDestination())
         {
-            controller.ChooseNextAction();
+            if(controller.ShouldGetNewAction)
+            {
+                controller.ChooseNextAction();
+            }
+            else
+            {
+                controller.Disappear();
+            }
         }
     }
 

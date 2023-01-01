@@ -34,6 +34,8 @@ public class ZombieAIController : MonoBehaviour
     private bool canAttack = true;
     private Health player;
     private float health;
+    private PedestrianAIController pedestrian;
+    private Vector3 pedestrianPos;
 
     private void Start()
     {
@@ -120,7 +122,11 @@ public class ZombieAIController : MonoBehaviour
     {
         timeSinceFollowUpdate = 0;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(playerPos, out hit, wanderRadius, NavMesh.AllAreas))
+        if (player != null && NavMesh.SamplePosition(playerPos, out hit, wanderRadius, NavMesh.AllAreas))
+        {
+            navMeshAgent.SetDestination(hit.position);
+        }
+        else if(pedestrian != null && NavMesh.SamplePosition(pedestrianPos, out hit, wanderRadius, NavMesh.AllAreas))
         {
             navMeshAgent.SetDestination(hit.position);
         }
@@ -186,6 +192,13 @@ public class ZombieAIController : MonoBehaviour
             player = other.GetComponent<Health>();
             currentState?.OnTriggerEnter();
         }
+        else if(other.CompareTag("Pedestrian"))
+        {
+            pedestrianPos = other.transform.position;
+            pedestrian = other.GetComponent<PedestrianAIController>();
+            pedestrian.OnZombieTriggerEnter();
+            currentState?.OnTriggerEnter();
+        }
     }
 
     public void TriggerStay(Collider other)
@@ -193,6 +206,13 @@ public class ZombieAIController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerPos = other.transform.position;
+            currentState?.OnTriggerStay();
+        }
+        else if (other.CompareTag("Pedestrian"))
+        {
+            pedestrianPos = other.transform.position;
+            pedestrian = other.GetComponent<PedestrianAIController>();
+            pedestrian.OnZombieTriggerStay();
             currentState?.OnTriggerStay();
         }
     }
@@ -203,6 +223,13 @@ public class ZombieAIController : MonoBehaviour
         {
             playerPos = Vector3.zero;
             player = null;
+            currentState?.OnTriggerExit();
+        }
+        else if (other.CompareTag("Pedestrian"))
+        {
+            pedestrianPos = Vector3.zero;
+            pedestrian.OnZombieTriggerExit();
+            pedestrian = null;
             currentState?.OnTriggerExit();
         }
     }

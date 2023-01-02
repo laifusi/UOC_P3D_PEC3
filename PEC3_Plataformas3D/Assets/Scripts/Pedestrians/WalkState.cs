@@ -13,6 +13,7 @@ public class WalkState : IAIState
 
     public void EnterState()
     {
+        controller.SetSpeed();
         controller.ChooseNextAction();
     }
 
@@ -40,12 +41,14 @@ public class WalkState : IAIState
 
     public void OnTriggerEnter()
     {
-        controller.ChangeToState(controller.RunAwayState);
+        controller.ReactToZombie();
+        //controller.ChangeToState(controller.RunAwayState);
     }
 
     public void OnTriggerStay()
     {
-        controller.ChangeToState(controller.RunAwayState);
+        controller.ReactToZombie();
+        //controller.ChangeToState(controller.RunAwayState);
     }
 
     public void OnTriggerExit() { }

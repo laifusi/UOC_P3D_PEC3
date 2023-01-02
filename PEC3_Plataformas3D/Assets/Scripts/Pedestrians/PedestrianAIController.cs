@@ -11,6 +11,12 @@ public class PedestrianAIController : MonoBehaviour
     [SerializeField] private Transform[] carDestinations;
     [SerializeField] private GameObject zombifiedParticles;
     [SerializeField] private Transform[] safePoints;
+    [SerializeField] private float minWalkSpeed = 0.5f;
+    [SerializeField] private float maxWalkSpeed = 1.5f;
+    [SerializeField] private float minRunSpeed = 1.5f;
+    [SerializeField] private float maxRunSpeed = 3f;
+    [SerializeField] private float minReactionTime = 0.2f;
+    [SerializeField] private float maxReactionTime = 3f;
 
     public WalkState WalkState { get; private set; }
     public RunAwayState RunAwayState { get; private set; }
@@ -26,6 +32,7 @@ public class PedestrianAIController : MonoBehaviour
     private NavMeshAgent agent;
     private bool shouldGetNewAction = true;
     private bool carAction;
+    private Animator animator;
 
     private void Start()
     {
@@ -33,6 +40,7 @@ public class PedestrianAIController : MonoBehaviour
         RunAwayState = new RunAwayState(this);
 
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         foreach(Transform car in carDestinations)
         {
@@ -52,6 +60,23 @@ public class PedestrianAIController : MonoBehaviour
         currentState?.ExitState();
         currentState = state;
         currentState?.EnterState();
+    }
+
+    public void SetSpeed()
+    {
+        float speed = 0;
+
+        if(currentState == WalkState)
+        {
+            speed = Random.Range(minWalkSpeed, maxWalkSpeed);
+        }
+        else if(currentState == RunAwayState)
+        {
+            speed = Random.Range(minRunSpeed, maxRunSpeed);
+        }
+
+        agent.speed = speed;
+        animator.SetFloat("Forward", agent.speed/2);
     }
 
     public void SetDestination()
@@ -104,6 +129,18 @@ public class PedestrianAIController : MonoBehaviour
         OnZombified?.Invoke(transform);
         Instantiate(zombifiedParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    public void ReactToZombie()
+    {
+        StartCoroutine(RandomizeReactionTime());
+    }
+
+    IEnumerator RandomizeReactionTime()
+    {
+        float reactionTime = Random.Range(minReactionTime, maxReactionTime);
+        yield return new WaitForSeconds(reactionTime);
+        ChangeToState(RunAwayState);
     }
 
     public void RunToSafePoint()

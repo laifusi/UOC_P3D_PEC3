@@ -13,6 +13,7 @@ public class RunAwayState : IAIState
 
     public void EnterState()
     {
+        controller.SetSpeed();
         controller.RunToSafePoint();
     }
 

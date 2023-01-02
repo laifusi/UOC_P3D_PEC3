@@ -1608,6 +1608,7 @@ GameObject:
   - component: {fileID: 2160310252947236522}
   - component: {fileID: 1576006993}
   - component: {fileID: 1576006992}
+  - component: {fileID: 7577650125931918582}
   m_Layer: 0
   m_Name: PedestrianGirl
   m_TagString: Pedestrian
@@ -1681,6 +1682,12 @@ MonoBehaviour:
   zombifiedParticles: {fileID: 0}
   safePoints:
   - {fileID: 0}
+  minWalkSpeed: 0.5
+  maxWalkSpeed: 1.5
+  minRunSpeed: 1.5
+  maxRunSpeed: 3
+  minReactionTime: 0.2
+  maxReactionTime: 3
 --- !u!54 &1576006993
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1711,6 +1718,26 @@ CapsuleCollider:
   m_Height: 1.81
   m_Direction: 1
   m_Center: {x: 0, y: 0.89, z: 0}
+--- !u!95 &7577650125931918582
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3097499810377266297}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 105341b9a228c4447be977ab0fc81c9a, type: 3}
+  m_Controller: {fileID: 9100000, guid: 873e2d3c5eb166f45a7a9f2e794553e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3401368502261597109
 GameObject:
   m_ObjectHideFlags: 0

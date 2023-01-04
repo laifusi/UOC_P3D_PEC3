@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - FxTemporaire
   - Pedestrian
+  - Car
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Bullet
-  - 
+  - Car
   - 
   - 
   - 

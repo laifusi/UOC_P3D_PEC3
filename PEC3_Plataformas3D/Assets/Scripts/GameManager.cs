@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winGameCanvas;
     [SerializeField] private GameObject endGameCanvas;
     [SerializeField] private UnityStandardAssets.Cameras.AutoCam cam;
+    [SerializeField] private GameObject player;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 
         Health.OnDeath += EndGame;
         ZombieSpawner.OnNoActivePoints += WinGame;
+        Car.OnOutOfCar += ReactivatePlayer;
     }
 
     private void WinGame()
@@ -36,9 +38,16 @@ public class GameManager : MonoBehaviour
         endGameCanvas.SetActive(true);
     }
 
+    private void ReactivatePlayer()
+    {
+        player.SetActive(true);
+        cam.gameObject.SetActive(true);
+    }
+
     private void OnDestroy()
     {
         Health.OnDeath -= EndGame;
         ZombieSpawner.OnNoActivePoints -= WinGame;
+        Car.OnOutOfCar -= ReactivatePlayer;
     }
 }

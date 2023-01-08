@@ -36,6 +36,9 @@ namespace UnityStandardAssets.Utility
         private Vector3 P2;
         private Vector3 P3;
 
+        public bool IsInitial;
+        public int InitialPoint;
+
         // Use this for initialization
         private void Awake()
         {
@@ -44,6 +47,26 @@ namespace UnityStandardAssets.Utility
                 CachePositionsAndDistances();
             }
             numPoints = Waypoints.Length;
+        }
+
+        public void ReorderPoints(int initialPoint)
+        {
+            Transform[] points = new Transform[waypointList.items.Length];
+            int counter = 0;
+
+            for (int i = initialPoint; i < waypointList.items.Length; i++)
+            {
+                points[counter] = waypointList.items[i];
+                counter++;
+            }
+
+            for(int i = 0; i < initialPoint; i++)
+            {
+                points[counter] = waypointList.items[i];
+                counter++;
+            }
+
+            waypointList.items = points;
         }
 
 
@@ -252,7 +275,7 @@ namespace UnityStandardAssets.Utility.Inspector
             bool changedLength = false;
             if (items.arraySize > 0)
             {
-                for (int i = -1; i < items.arraySize; ++i)
+                for (int i = 0; i < items.arraySize; i++)
                 {
                     var item = items.GetArrayElementAtIndex(i);
 

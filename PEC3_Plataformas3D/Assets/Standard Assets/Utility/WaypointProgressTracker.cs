@@ -32,6 +32,8 @@ namespace UnityStandardAssets.Utility
         [SerializeField] private float pointToPointThreshold = 4;
         // proximity to waypoint which must be reached to switch target to next waypoint : only used in PointToPoint mode.
 
+        [SerializeField] private LayerMask layer;
+
         public enum ProgressStyle
         {
             SmoothAlongRoute,
@@ -63,16 +65,42 @@ namespace UnityStandardAssets.Utility
             {
                 target = new GameObject(name + " Waypoint Target").transform;
             }
-
             Reset();
         }
 
+        private void CalculateClosestPoint()
+        {
+            Vector3 position = transform.position;
+            float closestDistance = 0;
+            Collider closestWP = null;
+
+            Collider[] waypoints = Physics.OverlapSphere(position, 100, layer);
+            foreach (Collider wp in waypoints)
+            {
+                float distance = Vector3.Distance(position, wp.transform.position);
+                if (closestDistance == 0 || distance < closestDistance)
+                {
+                    closestWP = wp;
+                    closestDistance = distance;
+                }
+            }
+
+            for (int i = 0; i < circuit.Waypoints.Length; i++)
+            {
+                if (closestWP.transform == circuit.Waypoints[i])
+                {
+                    circuit.ReorderPoints(i);
+                    break;
+                }
+            }
+        }
 
         // reset the object to sensible values
         public void Reset()
         {
             progressDistance = 0;
             progressNum = 0;
+            CalculateClosestPoint();
             if (progressStyle == ProgressStyle.PointToPoint)
             {
                 target.position = circuit.Waypoints[progressNum].position;

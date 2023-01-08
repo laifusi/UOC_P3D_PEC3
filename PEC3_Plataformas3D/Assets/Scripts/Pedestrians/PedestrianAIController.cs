@@ -22,7 +22,7 @@ public class PedestrianAIController : MonoBehaviour
     public RunAwayState RunAwayState { get; private set; }
     public bool ShouldGetNewAction => shouldGetNewAction;
 
-    public static System.Action<GameObject, Transform> OnGotInCar;
+    public static System.Action<GameObject, CarManager> OnGotInCar;
     public static System.Action<Transform> OnZombified;
 
     private IAIState currentState;
@@ -33,6 +33,7 @@ public class PedestrianAIController : MonoBehaviour
     private bool shouldGetNewAction = true;
     private bool carAction;
     private Animator animator;
+    private CarManager car;
 
     private void Start()
     {
@@ -169,7 +170,7 @@ public class PedestrianAIController : MonoBehaviour
     {
         if(carAction)
         {
-            OnGotInCar?.Invoke(prefab, chosenDestination);
+            OnGotInCar?.Invoke(prefab, car);
         }
 
         Destroy(gameObject);
@@ -193,5 +194,20 @@ public class PedestrianAIController : MonoBehaviour
     public void OnZombieTriggerExit()
     {
         currentState?.OnTriggerExit();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        car = other.GetComponent<CarManager>();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        CarManager carExited = other.GetComponent<CarManager>();
+
+        if (carExited == car && carExited != null)
+        {
+            car = null;
+        }
     }
 }

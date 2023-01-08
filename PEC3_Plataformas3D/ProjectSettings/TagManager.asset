@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Pedestrian
   - Car
+  - Waypoint
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Bullet
   - Car
-  - 
+  - Waypoint
   - 
   - 
   - 

@@ -13684,6 +13684,10 @@ PrefabInstance:
       propertyPath: m_Target
       value: 
       objectReference: {fileID: 1485118148}
+    - target: {fileID: 6007628060623710089, guid: b967cd0acd188d4498efecab690544bc, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6007628060630274669, guid: b967cd0acd188d4498efecab690544bc, type: 3}
       propertyPath: m_Name
       value: MultipurposeCameraRig_ForHuman
@@ -13691,6 +13695,10 @@ PrefabInstance:
     - target: {fileID: 6007628060630274669, guid: b967cd0acd188d4498efecab690544bc, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007628060635607305, guid: b967cd0acd188d4498efecab690544bc, type: 3}
+      propertyPath: m_Constraints
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6722255023320640019, guid: b967cd0acd188d4498efecab690544bc, type: 3}
       propertyPath: m_RootOrder
@@ -18405,6 +18413,10 @@ PrefabInstance:
     - target: {fileID: 8729160237704109715, guid: a812378d29df527479319fc0e2c99031, type: 3}
       propertyPath: m_JumpPower
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8729160237704109715, guid: a812378d29df527479319fc0e2c99031, type: 3}
+      propertyPath: airborneForce
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8729160237705885335, guid: a812378d29df527479319fc0e2c99031, type: 3}
       propertyPath: m_Enabled

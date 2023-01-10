@@ -15,6 +15,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		[SerializeField] float walkSpeed = 10;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -45,7 +46,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
-
+			Vector3 input = move;
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
@@ -70,6 +71,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
+
+			//We move the player
+			m_Rigidbody.velocity = new Vector3(input.x*walkSpeed, m_Rigidbody.velocity.y, input.z*walkSpeed);
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);

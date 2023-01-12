@@ -10,10 +10,11 @@ public class Gun : MonoBehaviour
     [SerializeField] private int initialAmountOfBullets = 10;
     [SerializeField] private int maxBullets = 10;
     [SerializeField] private Camera cam;
-    [SerializeField] private Transform characterTransform;
     [SerializeField] private Transform animationIKTarget;
     [SerializeField] private LayerMask aimingLayerMask;
     [SerializeField] private float minAimDistance = 2f;
+    [SerializeField] private float minAimAngle = 60f;
+    [SerializeField] private Transform player;
 
     private int amountOfMunition;
     private bool activeGun = true;
@@ -46,11 +47,15 @@ public class Gun : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 100, aimingLayerMask))
             {
                 Vector3 hitPoint = hit.point;
-                if(Vector3.Distance(hit.point, shootingPoint.position) > minAimDistance)
+
+                Vector3 targetDirection = player.position - hitPoint;
+                Vector3 forward = -player.forward;
+                float angle = Vector3.SignedAngle(targetDirection, forward, Vector3.up);
+                if (angle > -minAimAngle && angle < minAimAngle && Vector3.Distance(hit.point, shootingPoint.position) > minAimDistance)
                 {
                     shootingPoint.right = (hit.point - shootingPoint.position).normalized;
                     animationIKTarget.position = hit.point;
-                    animationIKTarget.forward = Vector3.Lerp(animationIKTarget.forward, (hit.point - shootingPoint.position).normalized, Time.deltaTime * 20f);
+                    animationIKTarget.forward = Vector3.Lerp(animationIKTarget.forward, (hit.point - shootingPoint.position).normalized, Time.deltaTime * 10f);
                 }
             }
 

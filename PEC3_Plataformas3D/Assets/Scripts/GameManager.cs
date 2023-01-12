@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject winGameCanvas;
     [SerializeField] private GameObject endGameCanvas;
-    [SerializeField] private UnityStandardAssets.Cameras.AutoCam cam;
+    [SerializeField] private UnityStandardAssets.Cameras.FreeLookCam cam;
     [SerializeField] private GameObject player;
 
     private void Start()
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private void WinGame()
     {
         cam.DisableMovement(false);
+        player.SetActive(false);
         winGameCanvas.SetActive(true);
     }
 

@@ -5,12 +5,8 @@ using UnityEngine.AI;
 
 public class PedestrianAIController : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private Transform[] cityDestinations;
-    [SerializeField] private Transform[] buildingDestinations;
-    [SerializeField] private Transform[] carDestinations;
+    //[SerializeField] private GameObject prefab;
     [SerializeField] private GameObject zombifiedParticles;
-    [SerializeField] private Transform[] safePoints;
     [SerializeField] private float minWalkSpeed = 0.5f;
     [SerializeField] private float maxWalkSpeed = 1.5f;
     [SerializeField] private float minRunSpeed = 1.5f;
@@ -22,18 +18,22 @@ public class PedestrianAIController : MonoBehaviour
     public RunAwayState RunAwayState { get; private set; }
     public bool ShouldGetNewAction => shouldGetNewAction;
 
-    public static System.Action<GameObject, CarManager> OnGotInCar;
+    //public static System.Action<GameObject, CarManager> OnGotInCar;
     public static System.Action<Transform> OnZombified;
 
     private IAIState currentState;
-    private List<Transform> emptyCars = new List<Transform>();
-    private List<Transform> occupiedCars = new List<Transform>();
+    //private List<Transform> emptyCars = new List<Transform>();
+    //private List<Transform> occupiedCars = new List<Transform>();
     private Transform chosenDestination;
     private NavMeshAgent agent;
     private bool shouldGetNewAction = true;
-    private bool carAction;
+    //private bool carAction;
     private Animator animator;
-    private CarManager car;
+    //private CarManager car;
+
+    private Transform[] cityDestinations;
+    private Transform[] buildingDestinations;
+    private Transform[] safePoints;
 
     private void Start()
     {
@@ -43,10 +43,10 @@ public class PedestrianAIController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        foreach(Transform car in carDestinations)
+        /*foreach(Transform car in carDestinations)
         {
             emptyCars.Add(car);
-        }
+        }*/
 
         ChangeToState(WalkState);
     }
@@ -97,7 +97,7 @@ public class PedestrianAIController : MonoBehaviour
 
         int actionPercentage = Random.Range(0, 100);
 
-        if (actionPercentage < 20)
+        /*if (actionPercentage < 20)
         {
             if(emptyCars.Count > 0)
             {
@@ -109,7 +109,7 @@ public class PedestrianAIController : MonoBehaviour
                 shouldGetNewAction = false;
             }
         }
-        else if(actionPercentage < 40)
+        else*/ if(actionPercentage < 30)
         {
             randomId = Random.Range(0, buildingDestinations.Length);
             chosenDestination = buildingDestinations[randomId];
@@ -168,10 +168,10 @@ public class PedestrianAIController : MonoBehaviour
 
     public void Disappear()
     {
-        if(carAction)
+        /*if(carAction)
         {
             OnGotInCar?.Invoke(prefab, car);
-        }
+        }*/
 
         Destroy(gameObject);
     }
@@ -196,7 +196,7 @@ public class PedestrianAIController : MonoBehaviour
         currentState?.OnTriggerExit();
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         car = other.GetComponent<CarManager>();
     }
@@ -209,5 +209,12 @@ public class PedestrianAIController : MonoBehaviour
         {
             car = null;
         }
+    }*/
+
+    public void SetCityPoints(Transform[] cityPoints, Transform[] buildingPoints, Transform[] safePoints)
+    {
+        cityDestinations = cityPoints;
+        buildingDestinations = buildingPoints;
+        this.safePoints = safePoints;
     }
 }

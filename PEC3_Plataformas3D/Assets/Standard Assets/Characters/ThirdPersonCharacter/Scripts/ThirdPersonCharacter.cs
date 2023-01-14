@@ -16,6 +16,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
 		[SerializeField] float walkSpeed = 10;
+		[SerializeField] AudioClip jumpClip;
+		[SerializeField] AudioClip landClip;
+		[SerializeField] AudioClip[] footstepClips;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -29,6 +32,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+		bool m_PreviouslyGrounded;
+		AudioSource audioSource;
+		bool shouldPlayStep;
+		bool previousFoot;
 
 
 		void Start()
@@ -36,6 +43,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator = GetComponent<Animator>();
 			m_Rigidbody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
+			audioSource = GetComponent<AudioSource>();
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
 
@@ -69,6 +77,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				HandleAirborneMovement();
 			}
 
+			if (!m_PreviouslyGrounded && m_IsGrounded)
+			{
+				PlayLandingSound();
+			}
+
 			ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
 
@@ -77,6 +90,28 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
+		}
+
+		private void PlayLandingSound()
+		{
+			audioSource.clip = landClip;
+			audioSource.Play();
+		}
+		private void PlayFootStepAudio()
+		{
+			if (!m_IsGrounded)
+			{
+				return;
+			}
+
+			// pick & play a random footstep sound from the array,
+			// excluding sound at index 0
+			int n = Random.Range(1, footstepClips.Length);
+			audioSource.clip = footstepClips[n];
+			audioSource.PlayOneShot(audioSource.clip);
+			// move picked sound to index 0 so it's not picked next time
+			footstepClips[n] = footstepClips[0];
+			footstepClips[0] = audioSource.clip;
 		}
 
 
@@ -143,11 +178,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.SetFloat("JumpLeg", jumpLeg);
 			}
 
+			shouldPlayStep = runCycle < k_Half != previousFoot;
+			previousFoot = runCycle < k_Half;
+
 			// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 			// which affects the movement speed because of the root motion.
 			if (m_IsGrounded && move.magnitude > 0)
 			{
 				m_Animator.speed = m_AnimSpeedMultiplier;
+				if(shouldPlayStep)
+				{
+					PlayFootStepAudio();
+				}
 			}
 			else
 			{
@@ -172,6 +214,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// check whether conditions are right to allow a jump:
 			if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
 			{
+				audioSource.PlayOneShot(jumpClip);
+
 				// jump!
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
 				m_IsGrounded = false;

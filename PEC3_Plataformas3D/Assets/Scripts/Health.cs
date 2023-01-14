@@ -9,9 +9,11 @@ public class Health : MonoBehaviour
     [SerializeField] float maxLife = 100;
     [SerializeField] private GameObject hitParticles;
     [SerializeField] private Transform head;
+    [SerializeField] private AudioClip getHurtClip;
 
     private float life;
     private Animator animator;
+    private AudioSource audioSource;
 
     public static Action<float> OnHealthChange;
     public static Action OnDeath;
@@ -23,6 +25,7 @@ public class Health : MonoBehaviour
     {
         life = maxLife;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -37,6 +40,8 @@ public class Health : MonoBehaviour
         Instantiate(hitParticles, head.position, Quaternion.identity);
 
         life -= damage;
+
+        audioSource.PlayOneShot(getHurtClip);
 
         OnHealthChange?.Invoke(life);
 

@@ -66,6 +66,12 @@ namespace UnityStandardAssets.Vehicles.Car
                 m_HighDecel = SetUpEngineAudioSource(highDecelClip);
             }
 
+            // we make sounds 3D
+            m_LowAccel.spatialBlend = 1;
+            m_LowDecel.spatialBlend = 1;
+            m_HighAccel.spatialBlend = 1;
+            m_HighDecel.spatialBlend = 1;
+
             // flag that we have started the sounds playing
             m_StartedSound = true;
         }

@@ -18,6 +18,7 @@ public class Gun : MonoBehaviour
 
     private int amountOfMunition;
     private bool activeGun = true;
+    private AudioSource audioSource;
 
     public static Action<int> OnAmmoChange;
 
@@ -29,6 +30,8 @@ public class Gun : MonoBehaviour
         Health.OnDeath += DeactivateGun;
         ZombieSpawner.OnNoActivePoints += DeactivateGun;
         Ammo.OnPickAmmo += AddAmmo;
+
+        audioSource = GetComponent<AudioSource>();
 
         amountOfMunition = initialAmountOfBullets;
         OnAmmoChange?.Invoke(amountOfMunition);
@@ -63,6 +66,7 @@ public class Gun : MonoBehaviour
             {
                 amountOfMunition--;
                 OnAmmoChange?.Invoke(amountOfMunition);
+                audioSource.Play();
 
                 GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
                 Destroy(bullet, 2);

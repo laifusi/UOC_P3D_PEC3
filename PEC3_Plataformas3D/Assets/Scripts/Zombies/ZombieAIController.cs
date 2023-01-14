@@ -18,6 +18,10 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private Rigidbody[] deathDropPrefabs;
     [SerializeField] private float possibilityOfDrop = 40;
     [SerializeField] private Vector3 dropForce;
+    [SerializeField] private AudioClip[] possibleWanderSounds;
+    [SerializeField] private AudioClip[] possibleFollowSounds;
+    [SerializeField] private AudioClip[] possibleHurtSounds;
+    [SerializeField] private AudioClip[] possibleAttackSounds;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
@@ -36,6 +40,7 @@ public class ZombieAIController : MonoBehaviour
     private float health;
     private PedestrianAIController pedestrian;
     private Vector3 pedestrianPos;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -43,6 +48,7 @@ public class ZombieAIController : MonoBehaviour
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         WanderState = new WanderState(this);
         FollowState = new FollowState(this);
@@ -70,6 +76,7 @@ public class ZombieAIController : MonoBehaviour
 
     public void StartMove()
     {
+        PlaySound(possibleWanderSounds, true);
         animator.SetBool("Running", false);
         animator.SetBool("Walking", true);
         navMeshAgent.isStopped = false;
@@ -78,6 +85,7 @@ public class ZombieAIController : MonoBehaviour
 
     public void StartRun()
     {
+        PlaySound(possibleFollowSounds, true);
         animator.SetBool("Running", true);
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = runSpeed;
@@ -170,6 +178,7 @@ public class ZombieAIController : MonoBehaviour
 
     public void Attack()
     {
+        PlaySound(possibleAttackSounds, false);
         animator.SetTrigger("Attack");
     }
 
@@ -247,6 +256,8 @@ public class ZombieAIController : MonoBehaviour
         OnLifeChange?.Invoke(health);
         animator.SetTrigger("GetHurt");
 
+        PlaySound(possibleHurtSounds, false);
+
         if(health <= 0)
         {
             Die();
@@ -308,6 +319,13 @@ public class ZombieAIController : MonoBehaviour
     private void DeactivateAI()
     {
         currentState = null;
+    }
+
+    private void PlaySound(AudioClip[] possibleSounds, bool shouldLoop)
+    {
+        audioSource.clip = possibleSounds[UnityEngine.Random.Range(0, possibleSounds.Length)];
+        audioSource.loop = shouldLoop;
+        audioSource.Play();
     }
 
     private void OnDestroy()

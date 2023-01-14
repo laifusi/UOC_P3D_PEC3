@@ -9,6 +9,6 @@ public class HealthPack : Item
     protected override void PickUp(GameObject character)
     {
         OnItemPickedUp?.Invoke(true, false, transform.parent);
-        character.GetComponent<Health>().Heal(healingValue);
+        character.GetComponent<Health>()?.Heal(healingValue);
     }
 }

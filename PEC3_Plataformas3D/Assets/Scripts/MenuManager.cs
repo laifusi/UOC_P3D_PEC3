@@ -19,4 +19,15 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void MusicOptions()
+    {
+        MusicManager.Instance.SwitchAudio(true, false);
+
+    }
+
+    public void SFXOptions()
+    {
+        MusicManager.Instance.SwitchAudio(false, true);
+    }
 }

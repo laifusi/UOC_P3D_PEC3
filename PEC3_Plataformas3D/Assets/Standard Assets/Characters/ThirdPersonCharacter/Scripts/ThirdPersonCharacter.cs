@@ -90,6 +90,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
+
+			m_PreviouslyGrounded = m_IsGrounded;
 		}
 
 		private void PlayLandingSound()

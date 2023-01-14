@@ -100,7 +100,7 @@ namespace UnityStandardAssets.Utility
         {
             progressDistance = 0;
             progressNum = 0;
-            CalculateClosestPoint();
+            //CalculateClosestPoint();
             if (progressStyle == ProgressStyle.PointToPoint)
             {
                 target.position = circuit.Waypoints[progressNum].position;
@@ -176,6 +176,11 @@ namespace UnityStandardAssets.Utility
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawLine(target.position, target.position + target.forward);
             }
+        }
+
+        public void SetWaypointCircuit(WaypointCircuit waypoints)
+        {
+            circuit = waypoints;
         }
     }
 }

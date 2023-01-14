@@ -19,7 +19,7 @@ public class Driver : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        CarManager car = other.GetComponent<CarManager>();
+        CarManager car = other.GetComponentInParent<CarManager>();
         if (timeSinceActivated > minTimeOutOfCar && car != null && Input.GetKey("e"))
         {
             OnEnterCar?.Invoke();

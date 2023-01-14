@@ -20,7 +20,7 @@ public class ShootingPointUI : MonoBehaviour
         image.enabled = false;
     }
 
-    private void ActivateIndicator()
+    private void ActivateIndicator(Transform outPosition)
     {
         image.enabled = true;
     }

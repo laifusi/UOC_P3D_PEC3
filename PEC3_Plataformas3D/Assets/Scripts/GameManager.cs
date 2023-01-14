@@ -39,9 +39,10 @@ public class GameManager : MonoBehaviour
         endGameCanvas.SetActive(true);
     }
 
-    private void ReactivatePlayer()
+    private void ReactivatePlayer(Transform outPosition)
     {
         player.SetActive(true);
+        player.transform.position = outPosition.position;
         cam.gameObject.SetActive(true);
     }
 

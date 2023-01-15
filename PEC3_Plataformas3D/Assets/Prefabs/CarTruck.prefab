@@ -7336,6 +7336,7 @@ GameObject:
   - component: {fileID: 5380070601893731030}
   - component: {fileID: 5380070601890508492}
   - component: {fileID: 5380070601894696982}
+  - component: {fileID: 7235478386087843223}
   m_Layer: 0
   m_Name: ColliderBottom
   m_TagString: Untagged
@@ -7421,6 +7422,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &7235478386087843223
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380070601892693720}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5380070601892693722
 GameObject:
   m_ObjectHideFlags: 0
@@ -14988,6 +15005,7 @@ GameObject:
   - component: {fileID: 6249650312358359243}
   - component: {fileID: 6249650312363508947}
   - component: {fileID: 6249650312359326219}
+  - component: {fileID: 1863768088250660773}
   m_Layer: 0
   m_Name: ColliderBottom
   m_TagString: Untagged
@@ -15073,6 +15091,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1863768088250660773
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249650312361323741}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6249650312361323743
 GameObject:
   m_ObjectHideFlags: 0
@@ -15835,6 +15869,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1307635527795650, guid: dec6e1dfe0585314386ba9c3b833424a, type: 3}
   m_PrefabInstance: {fileID: 7864515920536087060}
   m_PrefabAsset: {fileID: 0}
+--- !u!208 &3713492795225830670
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863560679089007062}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.404, y: 1.0380001, z: 3.505}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.534, z: 0.46100003}
+  m_TimeToStationary: 0.5
 --- !u!114 &8995529720892510469
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,24 +15,21 @@ public class PedestrianAIController : MonoBehaviour
     [SerializeField] private float maxReactionTime = 3f;
     [SerializeField] private GameObject runOverParticles;
     [SerializeField] private AudioClip[] possibleRunOverClips;
+    [SerializeField] private AudioClip[] possibleScaredClips;
 
     public WalkState WalkState { get; private set; }
     public RunAwayState RunAwayState { get; private set; }
     public bool ShouldGetNewAction => shouldGetNewAction;
 
-    //public static System.Action<GameObject, CarManager> OnGotInCar;
     public static System.Action<Transform> OnZombified;
 
     private IAIState currentState;
-    //private List<Transform> emptyCars = new List<Transform>();
-    //private List<Transform> occupiedCars = new List<Transform>();
     private Transform chosenDestination;
     private NavMeshAgent agent;
     private bool shouldGetNewAction = true;
-    //private bool carAction;
     private Animator animator;
-    //private CarManager car;
     private AudioSource audioSource;
+    private float timeSinceLastDestinationSet;
 
     private Transform[] cityDestinations;
     private Transform[] buildingDestinations;
@@ -46,11 +43,6 @@ public class PedestrianAIController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-        /*foreach(Transform car in carDestinations)
-        {
-            emptyCars.Add(car);
-        }*/
 
         ChangeToState(WalkState);
     }
@@ -87,12 +79,26 @@ public class PedestrianAIController : MonoBehaviour
     public void SetDestination()
     {
         agent.isStopped = false;
-        agent.SetDestination(chosenDestination.position);
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(chosenDestination.position, out hit, 100, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+        }
+        else
+        {
+            ChooseNextAction();
+        }
     }
 
     public bool ReachedDestination()
     {
         return agent.remainingDistance <= agent.stoppingDistance;
+    }
+
+    public bool IsReachedPossible()
+    {
+        timeSinceLastDestinationSet += Time.deltaTime;
+        return timeSinceLastDestinationSet >= 1;
     }
 
     public void ChooseNextAction()
@@ -101,19 +107,9 @@ public class PedestrianAIController : MonoBehaviour
 
         int actionPercentage = Random.Range(0, 100);
 
-        /*if (actionPercentage < 20)
-        {
-            if(emptyCars.Count > 0)
-            {
-                randomId = Random.Range(0, emptyCars.Count);
-                chosenDestination = emptyCars[randomId];
-                emptyCars.Remove(chosenDestination);
-                occupiedCars.Add(chosenDestination);
-                carAction = true;
-                shouldGetNewAction = false;
-            }
-        }
-        else*/ if(actionPercentage < 30)
+        timeSinceLastDestinationSet = 0;
+
+        if(actionPercentage < 30)
         {
             randomId = Random.Range(0, buildingDestinations.Length);
             chosenDestination = buildingDestinations[randomId];
@@ -145,6 +141,7 @@ public class PedestrianAIController : MonoBehaviour
     {
         float reactionTime = Random.Range(minReactionTime, maxReactionTime);
         yield return new WaitForSeconds(reactionTime);
+        PlaySound(possibleScaredClips, false);
         ChangeToState(RunAwayState);
     }
 
@@ -172,12 +169,8 @@ public class PedestrianAIController : MonoBehaviour
 
     public void Disappear()
     {
-        /*if(carAction)
-        {
-            OnGotInCar?.Invoke(prefab, car);
-        }*/
-
-        Destroy(gameObject);
+        GetComponent<Collider>().enabled = false;
+        Destroy(gameObject, 0.5f);
     }
 
     public bool ShouldRecalculateSafePoint()
@@ -200,21 +193,6 @@ public class PedestrianAIController : MonoBehaviour
         currentState?.OnTriggerExit();
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        car = other.GetComponent<CarManager>();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        CarManager carExited = other.GetComponent<CarManager>();
-
-        if (carExited == car && carExited != null)
-        {
-            car = null;
-        }
-    }*/
-
     public void SetCityPoints(Transform[] cityPoints, Transform[] buildingPoints, Transform[] safePoints)
     {
         cityDestinations = cityPoints;
@@ -231,6 +209,7 @@ public class PedestrianAIController : MonoBehaviour
 
     public void GetRunOver()
     {
+        Debug.Log("Got run over");
         PlaySound(possibleRunOverClips, false);
         Instantiate(runOverParticles, transform.position, Quaternion.identity);
         currentState = null;

@@ -1737,11 +1737,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 1
+  zombifyDistance: 3
   attackDamage: 20
   timeBetweenFollowRecalculation: 1
   wanderRadius: 15
   moveSpeed: 0.2
   runSpeed: 3
+  runAfterPedestrianSpeed: 5
   maxHealth: 100
   dieParticles: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   deathFixMultiplier: 1

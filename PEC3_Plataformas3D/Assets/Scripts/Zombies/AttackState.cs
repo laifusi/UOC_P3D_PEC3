@@ -16,7 +16,11 @@ public class AttackState : IAIState
         controller.StopMovement();
     }
 
-    public void UpdateState() { }
+    public void UpdateState()
+    {
+        if(controller.NoOneToAttack())
+            controller.ChangeToState(controller.WanderState);
+    }
 
     public void ExitState() { }
 
@@ -26,15 +30,23 @@ public class AttackState : IAIState
 
     public void OnTriggerStay()
     {
-        controller.LookAtPlayer();
-
-        if (!controller.ReachedDestination(false))
+        if (controller.FollowingPedestrian())
         {
-            controller.ChangeToState(controller.FollowState);
+            controller.ZombifyPedestrian();
+            controller.ChangeToState(controller.WanderState);
         }
-        else if (controller.ShouldAttack)
+        else
         {
-            controller.Attack();
+            controller.LookAtPlayer();
+
+            if (!controller.ReachedDestination(false))
+            {
+                controller.ChangeToState(controller.FollowState);
+            }
+            else if (controller.ShouldAttack)
+            {
+                controller.Attack();
+            }
         }
     }
 

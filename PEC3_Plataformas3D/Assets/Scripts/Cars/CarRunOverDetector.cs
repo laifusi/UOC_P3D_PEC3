@@ -14,10 +14,12 @@ public class CarRunOverDetector : MonoBehaviour
         if (zombie != null)
         {
             zombie.GetRunOver();
+            GetComponentInParent<UnityStandardAssets.Vehicles.Car.CarAIControl>().SetDrivingBool(true);
         }
         else if (pedestrian != null)
         {
             pedestrian.GetRunOver();
+            GetComponentInParent<UnityStandardAssets.Vehicles.Car.CarAIControl>().SetDrivingBool(true);
         }
         else if (player != null)
         {

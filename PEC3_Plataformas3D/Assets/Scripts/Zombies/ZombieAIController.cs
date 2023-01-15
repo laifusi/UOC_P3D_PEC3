@@ -7,11 +7,13 @@ using UnityEngine.AI;
 public class ZombieAIController : MonoBehaviour
 {
     [SerializeField] private float attackDistance;
+    [SerializeField] private float zombifyDistance = 2;
     [SerializeField] private float attackDamage = 20;
     [SerializeField] private float timeBetweenFollowRecalculation = 1;
     [SerializeField] private float wanderRadius = 5;
     [SerializeField] private float moveSpeed = 0.2f;
     [SerializeField] private float runSpeed = 3f;
+    [SerializeField] private float runAfterPedestrianSpeed = 5f;
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private GameObject dieParticles;
     [SerializeField] private float deathFixMultiplier = 1;
@@ -42,6 +44,7 @@ public class ZombieAIController : MonoBehaviour
     private PedestrianAIController pedestrian;
     private Vector3 pedestrianPos;
     private AudioSource audioSource;
+    private bool isFollowingPedestrian;
 
     private void Start()
     {
@@ -89,7 +92,14 @@ public class ZombieAIController : MonoBehaviour
         PlaySound(possibleFollowSounds, true);
         animator.SetBool("Running", true);
         navMeshAgent.isStopped = false;
-        navMeshAgent.speed = runSpeed;
+        if(player != null || pedestrian == null)
+        {
+            navMeshAgent.speed = runSpeed;
+        }
+        else if(pedestrian != null)
+        {
+            navMeshAgent.speed = runAfterPedestrianSpeed;
+        }
     }
 
     /// <summary>
@@ -120,7 +130,10 @@ public class ZombieAIController : MonoBehaviour
         }
         else
         {
-            return Vector3.Distance(playerPos, transform.position) <= attackDistance;
+            if (!isFollowingPedestrian)
+                return Vector3.Distance(playerPos, transform.position) <= attackDistance;
+            else
+                return Vector3.Distance(pedestrianPos, transform.position) <= zombifyDistance || pedestrian == null;
         }
     }
 
@@ -133,10 +146,12 @@ public class ZombieAIController : MonoBehaviour
         NavMeshHit hit;
         if (player != null && NavMesh.SamplePosition(playerPos, out hit, wanderRadius, NavMesh.AllAreas))
         {
+            isFollowingPedestrian = false;
             navMeshAgent.SetDestination(hit.position);
         }
         else if(pedestrian != null && NavMesh.SamplePosition(pedestrianPos, out hit, wanderRadius, NavMesh.AllAreas))
         {
+            isFollowingPedestrian = true;
             navMeshAgent.SetDestination(hit.position);
         }
     }
@@ -343,9 +358,31 @@ public class ZombieAIController : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
+    public bool NoOneToAttack()
+    {
+        return pedestrian == null && player == null;
+    }
+
+    public bool FollowingPedestrian()
+    {
+        bool wasFollowingPedestrian = isFollowingPedestrian;
+
+        if(pedestrian == null)
+        {
+            isFollowingPedestrian = false;
+        }
+
+        return isFollowingPedestrian || wasFollowingPedestrian;
+    }
+
+    public void ZombifyPedestrian()
+    {
+        pedestrian.TurnIntoZombie();
+    }
+
     private void OnDestroy()
     {
-        Health.OnDeath += DeactivateAI;
-        ZombieSpawner.OnNoActivePoints += DeactivateAI;
+        Health.OnDeath -= DeactivateAI;
+        ZombieSpawner.OnNoActivePoints -= DeactivateAI;
     }
 }

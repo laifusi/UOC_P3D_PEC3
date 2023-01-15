@@ -25,7 +25,7 @@ public class WalkState : IAIState
             {
                 controller.ChooseNextAction();
             }
-            else
+            else if(controller.IsReachedPossible())
             {
                 controller.Disappear();
             }
@@ -36,7 +36,6 @@ public class WalkState : IAIState
 
     public void GetHit()
     {
-        controller.TurnIntoZombie();
     }
 
     public void OnTriggerEnter()

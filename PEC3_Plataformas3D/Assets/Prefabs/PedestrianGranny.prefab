@@ -1637,7 +1637,6 @@ MonoBehaviour:
   maxRunSpeed: 3
   minReactionTime: 0.2
   maxReactionTime: 3
-  dieParticles: {fileID: 0}
   runOverParticles: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f, type: 3}
   possibleRunOverClips:
   - {fileID: 8300000, guid: 5affc2009b21c4727aec87aa6358ab5d, type: 3}
@@ -1646,6 +1645,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e80693636496d44c090917fd0a7e7a30, type: 3}
   - {fileID: 8300000, guid: f64ab19bf31be4730b511054c2cbdd91, type: 3}
   - {fileID: 8300000, guid: 51bdbc4b097054d66aa2f4766b3d1c9b, type: 3}
+  possibleScaredClips:
+  - {fileID: 8300000, guid: 007ff031ad4084bccb2b2360f1af1682, type: 3}
+  - {fileID: 8300000, guid: dc8b5b77f1d074168a43912932c62c5a, type: 3}
+  - {fileID: 8300000, guid: ab31ac1a0440c41be9de47bf9527b0ee, type: 3}
+  - {fileID: 8300000, guid: c45aa7b8f0c194f3bb55e256deaa5212, type: 3}
+  - {fileID: 8300000, guid: f8cf13adc1dfc451ea1bbe37269067ef, type: 3}
 --- !u!54 &6786895705765457390
 Rigidbody:
   m_ObjectHideFlags: 0

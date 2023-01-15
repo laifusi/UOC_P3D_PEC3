@@ -22,6 +22,7 @@ public class ZombieSpawner : Spawner
     private void Start()
     {
         ZombieDoor.OnDoorDestroyed += DoorDestroyed;
+        PedestrianAIController.OnZombified += ZombifyPedestrian;
 
         foreach(Transform point in spawnPoints)
         {
@@ -99,8 +100,14 @@ public class ZombieSpawner : Spawner
         }
     }
 
+    private void ZombifyPedestrian(Transform pedestrianTransform)
+    {
+        Instantiate(zombiePrefab, pedestrianTransform.position, pedestrianTransform.rotation);
+    }
+
     private void OnDestroy()
     {
         ZombieDoor.OnDoorDestroyed -= DoorDestroyed;
+        PedestrianAIController.OnZombified -= ZombifyPedestrian;
     }
 }

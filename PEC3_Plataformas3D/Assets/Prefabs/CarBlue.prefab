@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2763287112071873925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7486500725842187152}
+  - component: {fileID: 6478077829034815074}
+  - component: {fileID: 6843334080984902602}
+  m_Layer: 0
+  m_Name: AIFrontDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7486500725842187152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2763287112071873925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.65, z: 4.42}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5000379546370951627}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6478077829034815074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2763287112071873925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b93876fe9850914e8813a703603a137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carControl: {fileID: 5000379546370951630}
+--- !u!65 &6843334080984902602
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2763287112071873925}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.96, y: 2.23, z: 1.93}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5000379545112227173
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,6 +794,7 @@ GameObject:
   - component: {fileID: 5000379545253049888}
   - component: {fileID: 5000379545253049889}
   - component: {fileID: 5000379545253049894}
+  - component: {fileID: 747295027}
   m_Layer: 0
   m_Name: ColliderBody
   m_TagString: Untagged
@@ -820,6 +880,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &747295027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000379545253049892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c063cdb291eb4554eab5697973d66c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5000379545866407809}
+  maxTimeBlocking: 10
+  isPlayerControlled: 0
 --- !u!1 &5000379545278871301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,7 +1185,7 @@ MonoBehaviour:
   m_MaxHandbrakeTorque: 100000000
   m_Downforce: 100
   m_SpeedType: 0
-  m_Topspeed: 150
+  m_Topspeed: 50
   m_RevRangeBoundary: 1
   m_SlipLimit: 0.3
   m_BrakeTorque: 20000
@@ -6902,7 +6977,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379545866407809}
-  m_LocalRotation: {x: -0, y: 0.97091216, z: -0, w: 0.23943622}
+  m_LocalRotation: {x: 0, y: 0.97091115, z: 0, w: 0.23944019}
   m_LocalPosition: {x: -4.87, y: 0.09, z: 40.42}
   m_LocalScale: {x: 0.88, y: 0.88, z: 0.88}
   m_ConstrainProportionsScale: 1
@@ -7080,6 +7155,7 @@ GameObject:
   - component: {fileID: 5000379545941052555}
   - component: {fileID: 5000379545941052552}
   - component: {fileID: 5000379545941052553}
+  - component: {fileID: 1649669344}
   m_Layer: 0
   m_Name: ColliderBody
   m_TagString: Untagged
@@ -7165,6 +7241,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1649669344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000379545941052559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c063cdb291eb4554eab5697973d66c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5000379545866407809}
+  maxTimeBlocking: 10
+  isPlayerControlled: 1
 --- !u!1 &5000379546008592223
 GameObject:
   m_ObjectHideFlags: 0
@@ -7275,7 +7366,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546026987252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.367, y: 0.648, z: -1.741}
+  m_LocalPosition: {x: 1.16, y: 0.648, z: -1.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7646,7 +7737,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546140986832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3520001, y: 0.648, z: -1.741}
+  m_LocalPosition: {x: -1.1400006, y: 0.648, z: -1.3799994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7914,7 +8005,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546197658959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.352, y: 0.65, z: 1.65}
+  m_LocalPosition: {x: -1.14, y: 0.65, z: 1.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8145,6 +8236,7 @@ Transform:
   - {fileID: 5000379545867176836}
   - {fileID: 5000379546615651644}
   - {fileID: 7125183077796040767}
+  - {fileID: 7486500725842187152}
   m_Father: {fileID: 5000379545866407810}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -13141,7 +13233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546586897189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3520001, y: 0.648, z: -1.741}
+  m_LocalPosition: {x: -1.1400031, y: 0.648, z: -1.379998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13623,7 +13715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546657167051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.367, y: 0.648, z: -1.741}
+  m_LocalPosition: {x: 1.1599993, y: 0.648, z: -1.3799996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14240,7 +14332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546881197402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3669999, y: 0.64999986, z: 1.6499996}
+  m_LocalPosition: {x: 1.1600012, y: 0.64999986, z: 1.6099982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14559,7 +14651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379546959129950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.352, y: 0.65, z: 1.65}
+  m_LocalPosition: {x: -1.1400009, y: 0.65, z: 1.6100003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14935,7 +15027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000379547149143486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3669999, y: 0.64999986, z: 1.6499996}
+  m_LocalPosition: {x: 1.1600012, y: 0.64999986, z: 1.6099982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15577,3 +15669,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1106068356828452, guid: 4fd286b338658f84db100ebd31338c7e, type: 3}
   m_PrefabInstance: {fileID: 7128902894292780089}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1079085224711107508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128387457591200029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c063cdb291eb4554eab5697973d66c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5000379545866407809}
+  maxTimeBlocking: 10
+  isPlayerControlled: 0

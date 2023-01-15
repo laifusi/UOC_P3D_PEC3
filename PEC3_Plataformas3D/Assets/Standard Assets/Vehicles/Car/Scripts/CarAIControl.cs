@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -151,6 +152,7 @@ namespace UnityStandardAssets.Vehicles.Car
                                                   ? m_BrakeSensitivity
                                                   : m_AccelSensitivity;
 
+
                 // decide the actual amount of accel/brake input to achieve desired speed.
                 float accel = Mathf.Clamp((desiredSpeed - m_CarController.CurrentSpeed)*accelBrakeSensitivity, -1, 1);
 
@@ -217,6 +219,19 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             m_Target = target;
             m_Driving = true;
+        }
+
+        public void SetDrivingBool(bool driving)
+        {
+            m_Driving = driving;
+            if(m_Driving)
+            {
+                m_CarController.Move(1, 1, -1f, 0f);
+            }
+            else
+            {
+                m_CarController.Move(0, 0, -1f, 1f);
+            }
         }
     }
 }

@@ -100,6 +100,10 @@ public class ZombieSpawner : Spawner
         }
     }
 
+    /// <summary>
+    /// Method to instantiate a zombie where a pedestrian got turnt
+    /// </summary>
+    /// <param name="pedestrianTransform">Transform where the pedestrian was</param>
     private void ZombifyPedestrian(Transform pedestrianTransform)
     {
         Instantiate(zombiePrefab, pedestrianTransform.position, pedestrianTransform.rotation);

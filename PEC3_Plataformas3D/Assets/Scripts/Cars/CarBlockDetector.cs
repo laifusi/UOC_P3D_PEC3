@@ -10,6 +10,9 @@ public class CarBlockDetector : MonoBehaviour
 
     float timeBlocking;
 
+    /// <summary>
+    /// Method to know the car is blocking a road and check if it should be destroyed
+    /// </summary>
     public void GetNotifiedOfRoadBlocking()
     {
         if (isPlayerControlled)
@@ -23,6 +26,9 @@ public class CarBlockDetector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method to reset the blocking timer
+    /// </summary>
     public void GetNotifiedOfBlockingEnd()
     {
         timeBlocking = 0;

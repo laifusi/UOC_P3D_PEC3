@@ -1743,7 +1743,7 @@ MonoBehaviour:
   wanderRadius: 15
   moveSpeed: 0.2
   runSpeed: 3
-  runAfterPedestrianSpeed: 5
+  runAfterPedestrianSpeed: 7
   maxHealth: 100
   dieParticles: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   deathFixMultiplier: 1

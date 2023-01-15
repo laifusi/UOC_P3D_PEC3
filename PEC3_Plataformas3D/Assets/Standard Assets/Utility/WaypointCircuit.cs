@@ -49,26 +49,6 @@ namespace UnityStandardAssets.Utility
             numPoints = Waypoints.Length;
         }
 
-        public void ReorderPoints(int initialPoint)
-        {
-            Transform[] points = new Transform[waypointList.items.Length];
-            int counter = 0;
-
-            for (int i = initialPoint; i < waypointList.items.Length; i++)
-            {
-                points[counter] = waypointList.items[i];
-                counter++;
-            }
-
-            for(int i = 0; i < initialPoint; i++)
-            {
-                points[counter] = waypointList.items[i];
-                counter++;
-            }
-
-            waypointList.items = points;
-        }
-
 
         public RoutePoint GetRoutePoint(float dist)
         {

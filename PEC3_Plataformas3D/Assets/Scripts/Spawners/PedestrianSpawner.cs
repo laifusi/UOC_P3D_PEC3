@@ -14,12 +14,19 @@ public class PedestrianSpawner : Spawner
 
     private float timeSinceLastSpawn;
 
+    /// <summary>
+    /// We check if it's been long enough to spawn a new pedestrian
+    /// </summary>
     protected override bool ShouldSpawn()
     {
         timeSinceLastSpawn += Time.deltaTime;
         return timeSinceLastSpawn > minTimeBetweenSpawns;
     }
 
+    /// <summary>
+    /// We spawn a random Pedestrian in a random Spawn Point
+    /// We pass over the city, building and safe destinations
+    /// </summary>
     protected override void Spawn()
     {
         int randomPrefab = Random.Range(0, pedestrianPrefabs.Length);

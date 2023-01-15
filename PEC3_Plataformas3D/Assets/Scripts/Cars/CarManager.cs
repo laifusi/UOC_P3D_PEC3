@@ -15,19 +15,6 @@ public class CarManager : MonoBehaviour
         StartStaticCar();
     }
 
-    /*private void Start()
-    {
-        PedestrianAIController.OnGotInCar += StartCar;
-    }*/
-
-    /*private void StartCar(GameObject pedestrian, CarManager car)
-    {
-        if(car == this)
-        {
-            StartAICar();
-        }
-    }*/
-
     public void StartStaticCar()
     {
         ResetTransforms();
@@ -94,9 +81,4 @@ public class CarManager : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    /*private void OnDestroy()
-    {
-        PedestrianAIController.OnGotInCar -= StartCar;
-    }*/
 }

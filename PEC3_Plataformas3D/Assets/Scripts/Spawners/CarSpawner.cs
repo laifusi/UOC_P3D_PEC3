@@ -10,12 +10,19 @@ public class CarSpawner : Spawner
 
     private float timeSinceLastSpawn;
 
+    /// <summary>
+    /// We check if it's been long enough to spawn a new car
+    /// </summary>
     protected override bool ShouldSpawn()
     {
         timeSinceLastSpawn += Time.deltaTime;
         return timeSinceLastSpawn > minTimeBetweenSpawns;
     }
 
+    /// <summary>
+    /// We spawn a new random car in a random CarLine
+    /// We set the circuit and start the AI car
+    /// </summary>
     protected override void Spawn()
     {
         timeSinceLastSpawn = 0;

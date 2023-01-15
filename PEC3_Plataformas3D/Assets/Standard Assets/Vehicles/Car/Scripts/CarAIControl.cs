@@ -221,6 +221,9 @@ namespace UnityStandardAssets.Vehicles.Car
             m_Driving = true;
         }
 
+        /// <summary>
+        /// We set the driving boolean and make the car brake or accelerate
+        /// </summary>
         public void SetDrivingBool(bool driving)
         {
             m_Driving = driving;

@@ -337,6 +337,11 @@ public class ZombieAIController : MonoBehaviour
         currentState = null;
     }
 
+    /// <summary>
+    /// Method to play a random sound from a list of sounds
+    /// </summary>
+    /// <param name="possibleSounds">list of sounds</param>
+    /// <param name="shouldLoop">whether the sound should loop</param>
     private void PlaySound(AudioClip[] possibleSounds, bool shouldLoop)
     {
         audioSource.clip = possibleSounds[UnityEngine.Random.Range(0, possibleSounds.Length)];
@@ -344,6 +349,10 @@ public class ZombieAIController : MonoBehaviour
         audioSource.Play();
     }
 
+    /// <summary>
+    /// Method to react to being run over by a car
+    /// We play a sound and some particles and destroy the zombie
+    /// </summary>
     public void GetRunOver()
     {
         PlaySound(possibleHurtSounds, false);
@@ -358,11 +367,17 @@ public class ZombieAIController : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
+    /// <summary>
+    /// Method to define if a pedestrian disappeared and there's no one else to follow
+    /// </summary>
     public bool NoOneToAttack()
     {
         return pedestrian == null && player == null;
     }
 
+    /// <summary>
+    /// Method that defines whether we are following a pedestrian or not
+    /// </summary>
     public bool FollowingPedestrian()
     {
         bool wasFollowingPedestrian = isFollowingPedestrian;
@@ -375,6 +390,9 @@ public class ZombieAIController : MonoBehaviour
         return isFollowingPedestrian || wasFollowingPedestrian;
     }
 
+    /// <summary>
+    /// Method to notify the pedestrian it should turn into a zombie
+    /// </summary>
     public void ZombifyPedestrian()
     {
         pedestrian.TurnIntoZombie();

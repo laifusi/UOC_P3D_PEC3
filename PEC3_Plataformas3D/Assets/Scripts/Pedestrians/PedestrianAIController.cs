@@ -209,7 +209,6 @@ public class PedestrianAIController : MonoBehaviour
 
     public void GetRunOver()
     {
-        Debug.Log("Got run over");
         PlaySound(possibleRunOverClips, false);
         Instantiate(runOverParticles, transform.position, Quaternion.identity);
         currentState = null;

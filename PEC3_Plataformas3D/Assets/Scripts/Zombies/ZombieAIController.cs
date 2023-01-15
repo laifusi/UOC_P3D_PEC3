@@ -22,6 +22,7 @@ public class ZombieAIController : MonoBehaviour
     [SerializeField] private AudioClip[] possibleFollowSounds;
     [SerializeField] private AudioClip[] possibleHurtSounds;
     [SerializeField] private AudioClip[] possibleAttackSounds;
+    [SerializeField] private GameObject runOverParticles;
 
     public WanderState WanderState { get; private set; }    // Wander state
     public FollowState FollowState { get; private set; }    // Follow state
@@ -326,6 +327,20 @@ public class ZombieAIController : MonoBehaviour
         audioSource.clip = possibleSounds[UnityEngine.Random.Range(0, possibleSounds.Length)];
         audioSource.loop = shouldLoop;
         audioSource.Play();
+    }
+
+    public void GetRunOver()
+    {
+        PlaySound(possibleHurtSounds, false);
+        Instantiate(runOverParticles, transform.position, Quaternion.identity);
+        Instantiate(dieParticles, transform.position, Quaternion.identity);
+        currentState = null;
+        GetComponent<Collider>().enabled = false;
+        SkinnedMeshRenderer[] meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach(SkinnedMeshRenderer mr in meshRenderers)
+            mr.enabled = false;
+        navMeshAgent.enabled = false;
+        Destroy(gameObject, 2f);
     }
 
     private void OnDestroy()

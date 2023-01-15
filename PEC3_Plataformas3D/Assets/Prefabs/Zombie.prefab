@@ -1662,6 +1662,7 @@ GameObject:
   - component: {fileID: 7791533991629838928}
   - component: {fileID: 7791533991629838931}
   - component: {fileID: 928738043259745236}
+  - component: {fileID: 8368007706628663939}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -1764,6 +1765,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8b9826c915109c446be0c38d54721a2d, type: 3}
   - {fileID: 8300000, guid: 9f8a1e6741a342647b9c0055e1e0a7b8, type: 3}
   - {fileID: 8300000, guid: 83041cb4dc7766b48a4342db7511819d, type: 3}
+  runOverParticles: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f, type: 3}
 --- !u!195 &7791533991629838931
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1882,6 +1884,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &8368007706628663939
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980719283408932370}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &7084012798958246454
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class PedestrianAIController : MonoBehaviour
     [SerializeField] private float maxRunSpeed = 3f;
     [SerializeField] private float minReactionTime = 0.2f;
     [SerializeField] private float maxReactionTime = 3f;
+    [SerializeField] private GameObject runOverParticles;
+    [SerializeField] private AudioClip[] possibleRunOverClips;
 
     public WalkState WalkState { get; private set; }
     public RunAwayState RunAwayState { get; private set; }
@@ -30,6 +32,7 @@ public class PedestrianAIController : MonoBehaviour
     //private bool carAction;
     private Animator animator;
     //private CarManager car;
+    private AudioSource audioSource;
 
     private Transform[] cityDestinations;
     private Transform[] buildingDestinations;
@@ -42,6 +45,7 @@ public class PedestrianAIController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         /*foreach(Transform car in carDestinations)
         {
@@ -216,5 +220,25 @@ public class PedestrianAIController : MonoBehaviour
         cityDestinations = cityPoints;
         buildingDestinations = buildingPoints;
         this.safePoints = safePoints;
+    }
+
+    private void PlaySound(AudioClip[] possibleSounds, bool shouldLoop)
+    {
+        audioSource.clip = possibleSounds[Random.Range(0, possibleSounds.Length)];
+        audioSource.loop = shouldLoop;
+        audioSource.Play();
+    }
+
+    public void GetRunOver()
+    {
+        PlaySound(possibleRunOverClips, false);
+        Instantiate(runOverParticles, transform.position, Quaternion.identity);
+        currentState = null;
+        GetComponent<Collider>().enabled = false;
+        agent.enabled = false;
+        SkinnedMeshRenderer[] meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer mr in meshRenderers)
+            mr.enabled = false;
+        Destroy(gameObject, 2f);
     }
 }

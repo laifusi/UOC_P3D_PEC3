@@ -1727,6 +1727,7 @@ GameObject:
   - component: {fileID: 8005773660695691976}
   - component: {fileID: 8005773660695691979}
   - component: {fileID: -8903882439243949475}
+  - component: {fileID: -7102539918118819559}
   m_Layer: 0
   m_Name: BossZombie
   m_TagString: Untagged
@@ -1831,6 +1832,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5ce6bb262e363834db2b5cdef8a21155, type: 3}
   - {fileID: 8300000, guid: 24b617db03a924c4ab49c13feb18c10d, type: 3}
   - {fileID: 8300000, guid: 83041cb4dc7766b48a4342db7511819d, type: 3}
+  runOverParticles: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f, type: 3}
 --- !u!195 &8005773660695691979
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1949,6 +1951,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &-7102539918118819559
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195434353479341706}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &7681999053354061522
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,16 +13,16 @@ public class ZombiePlayerDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        controller.TriggerEnter(other);
+        controller?.TriggerEnter(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        controller.TriggerStay(other);
+        controller?.TriggerStay(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        controller.TriggerExit(other);
+        controller?.TriggerExit(other);
     }
 }

@@ -25651,10 +25651,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarOrange
       objectReference: {fileID: 0}
-    - target: {fileID: 2849118151352744772, guid: a4141aef99b04a147bad785ccf00d447, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2849118151352744775, guid: a4141aef99b04a147bad785ccf00d447, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -25699,6 +25695,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2849118151998356889, guid: a4141aef99b04a147bad785ccf00d447, type: 3}
+      propertyPath: m_Target
+      value: 
+      objectReference: {fileID: 1485118148}
     - target: {fileID: 2849118152863890698, guid: a4141aef99b04a147bad785ccf00d447, type: 3}
       propertyPath: circuit
       value: 

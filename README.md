@@ -53,4 +53,4 @@ El uso de la cámara y el apuntar aún podrían mejorarse.
 Los coches no siempre se reactivan cuando el elemento que tenían delante se destruye y provoca colas. Si esto ocurre en el punto de salida, se puede instanciar un coche debajo de otro.
 
 ## Vídeo
-Este es el [enlace]() al vídeo de la práctica.
+Este es el [enlace](https://youtu.be/4fLYVBkIMxA) al vídeo de la práctica.

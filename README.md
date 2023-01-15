@@ -37,13 +37,20 @@ A este tipo de coche, le añadimos, además, la clase CarAIFrontDetector y un tr
 
 Finalmente, a los coches en movimiento les añadimos un trigger delante - y detrás en el caso de aquellos controlados por el jugador - con el que detectar los atropellos. Les añadimos la clase CarRunOverDetector, donde comprobamos qué tipo de objeto entra al trigger y si se trata de un zombie o de un peatón, los hacemos explotar - en los métodos GetRunOver de ZombieAIController y PedestrianAIController, respectivamente. Si, por el contrario, atropellamos al jugador, se le aplica una cantidad de daño.
 
+Por otro lado, podemos hablar sobre las nuevas funcionalidades añadidas a los elementos ya existentes en el trabajo anterior. Los cambios destacables se han hecho sobre los zombies y sobre el jugador.
+
+A los zombies, les hemos añadido funcionalidad para que persigan a los peatones y los conviertan en zombies. Para esto, imitamos el funcionamiento de la persecución del jugador, haciendo que este tenga prioridad a la hora de ser perseguido. Cuando el zombie detecta a un peatón, lo persigue hasta que sale de su zona de detección. Si se acerca suficiente, llamamos al método TurnIntoZombie del PedestrianAIController, que mediante un evento avisa al ZombieSpawner de que debe instanciar un nuevo zombie en el sitio donde se encuentra el peatón. Cuando el peatón se convierte en zombie, volvemos al estado Wander.
+
+En cuanto al jugador, le añadimos varias mejoras que nos permiten mover al personaje tanto para atrás como cuando está en el aire en mitad de un salto. Además, corregimos en cierta medida el uso de la cámara y la funcionalidad de apuntar, impidiendo que el personaje se gire en ángulos que no deberían ser posibles.
+
+Por último, como ya se ha comentado, añadimos sonidos a todos los elementos del juego y varios sistemas de partículas nuevos.
 
 ## Problemas conocidos
-El control del jugador mediante el ThirdPersonController se podría mejorar y no permite al jugador moverse en el salto si este movimiento no se ha iniciado anteriormente, no he encontrado la forma de solucionarlo sin dejar de usar el asset estándar.
-
-En el escenario, la unión de alguno de los colliders de los assets provoca que el jugador se impulse hacia arriba como si tropezara con ellos, a simple vista no parece que esto deba pasar pero no he encontrado el motivo.
-
 Al iniciar el nivel es necesario disparar una vez para que se active correctamente la funcionalidad de apuntar.
 
+El uso de la cámara y el apuntar aún podrían mejorarse.
+
+Los coches no siempre se reactivan cuando el elemento que tenían delante se destruye y provoca colas. Si esto ocurre en el punto de salida, se puede instanciar un coche debajo de otro.
+
 ## Vídeo
-Este es el [enlace](https://youtu.be/9tUgbhGmeI4) al vídeo de la PEC.
+Este es el [enlace]() al vídeo de la práctica.
